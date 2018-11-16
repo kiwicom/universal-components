@@ -1,8 +1,8 @@
 // @flow
 
 import * as React from 'react';
-import { Text as RNText } from 'react-native';
-import StyleSheet from '../PlatformStyleSheet';
+// eslint-disable-next-line no-restricted-imports
+import { Text as RNText, StyleSheet } from 'react-native';
 
 import iconsMap from './icons.json';
 

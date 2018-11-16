@@ -2,7 +2,6 @@
 
 /* Components */
 export { default as Text } from './Text';
-export { default as Icon } from './Icon';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';
