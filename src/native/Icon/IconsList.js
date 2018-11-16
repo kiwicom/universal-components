@@ -9,19 +9,22 @@ import iconsMap from './icons.json';
 
 import Icon from './index';
 
+const keyExtractor = item => item;
+const renderItem = ({ item }) => (
+  <View key={item} style={styles.item}>
+    <Text>{item}</Text>
+    <Icon name={item} size={40} />
+  </View>
+);
+
 const IconsList = () => (
   <FlatList
     data={Object.keys(iconsMap)}
-    keyExtractor={item => item}
+    keyExtractor={keyExtractor}
     showsVerticalScrollIndicator={false}
     contentContainerStyle={styles.list}
     numColumns={2}
-    renderItem={({ item }) => (
-      <View key={item} style={styles.item}>
-        <Text>{item}</Text>
-        <Icon name={item} size={40} />
-      </View>
-    )}
+    renderItem={renderItem}
   />
 );
 
