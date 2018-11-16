@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { TextInput as RNTextInput, View } from 'react-native';
+import { TextInput as RNTextInput, View, Text } from 'react-native';
 
 import { StyleSheet } from '..';
 import FormLabel from './FormLabel';
@@ -15,6 +15,7 @@ type Props = {|
   +onBlur?: () => void | Promise<any>,
   +required?: boolean,
   +label: string,
+  +prefix?: React$Node,
 |};
 
 type State = {
@@ -27,6 +28,8 @@ const colors = {
   borderColorInput: '#bac7d5',
   colorPlaceholderInput: '#bac7d5',
   borderColorInputFocus: '#0176D2',
+  colorIconInput: '#bac7d5',
+  colorTextInputPrefix: '#7f91a8',
 };
 
 const getHeight = size => (size === 'small' ? 32 : 44);
@@ -34,6 +37,17 @@ const getColor = disabled =>
   disabled ? colors.colorTextInputDisabled : colors.colorTextInput;
 const getBorderColor = isFocused =>
   isFocused ? colors.borderColorInputFocus : colors.borderColorInput;
+
+const Prefix = ({ children }) => {
+  if (typeof children === 'string') {
+    return (
+      <View style={styles.prefix}>
+        <Text style={styles.textInputPrefix}>{children}</Text>
+      </View>
+    );
+  }
+  return <View style={styles.prefix}>{children}</View>;
+};
 
 class TextInput extends React.Component<Props, State> {
   state = {
@@ -66,10 +80,12 @@ class TextInput extends React.Component<Props, State> {
       disabled,
       label,
       required,
+      prefix,
     } = this.props;
     const { isFocused } = this.state;
     return (
       <View>
+        {/* Need to add support for inlineLabel */}
         {label && (
           <FormLabel filled={!!value} required={required}>
             {label}
@@ -80,11 +96,12 @@ class TextInput extends React.Component<Props, State> {
             styles.inputContainer,
             {
               height: getHeight(size),
-              lineHeight: getHeight(size),
               borderColor: getBorderColor(isFocused),
             },
           ]}
         >
+          {/* Need to add support for icon prefix */}
+          {prefix && <Prefix>{prefix}</Prefix>}
           <RNTextInput
             onFocus={this.onFocus}
             onBlur={this.onBlur}
@@ -121,6 +138,15 @@ const styles = StyleSheet.create({
     web: {
       outline: 'none',
     },
+  },
+  prefix: {
+    color: colors.colorIconInput,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingEnd: 12,
+  },
+  textInputPrefix: {
+    color: colors.colorTextInputPrefix,
   },
 });
 

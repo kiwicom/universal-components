@@ -13,4 +13,7 @@ storiesOf('TextInput', module)
   ))
   .add('required filed', () => (
     <TextInput label="Label" placeholder="Type something" required />
+  ))
+  .add('with text prefix', () => (
+    <TextInput label="Label" placeholder="Type something" required prefix="$" />
   ));
