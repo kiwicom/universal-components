@@ -6,11 +6,13 @@
 
 function loadStories() {
   require('../src/Text/Text.stories');
+  require('../src/TextInput/TextInput.stories');
   
 }
 
 const stories = [
   '../src/Text/Text.stories',
+  '../src/TextInput/TextInput.stories',
   
 ];
 
