@@ -43,6 +43,7 @@ module.exports = {
           }
         ]
       }
-    ]
+    ],
+    "react/default-props-match-prop-types": OFF,
   },
-}
+};
