@@ -28,11 +28,16 @@ const Icon = ({ name, color, size }: Props) => (
   <RNText
     color={color}
     size={size}
-    style={[styles.icon, { color: color ?? '#46515e', fontSize: size ?? 20 }]}
+    style={[styles.icon, { color, fontSize: size }]}
   >
     {getIconCharacter(name)}
   </RNText>
 );
+
+Icon.defaultProps = {
+  color: '#46515e',
+  size: 20,
+};
 
 const styles = StyleSheet.create({
   icon: {
