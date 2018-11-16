@@ -28,7 +28,7 @@ const Icon = ({ name, color, size }: Props) => (
   <RNText
     color={color}
     size={size}
-    style={[styles.icon, { color: color || '#46515e', fontSize: size || 20 }]}
+    style={[styles.icon, { color: color ?? '#46515e', fontSize: size ?? 20 }]}
   >
     {getIconCharacter(name)}
   </RNText>
