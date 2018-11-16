@@ -5,12 +5,12 @@ import { View, Text } from 'react-native';
 
 import { StyleSheet } from '..';
 
-type Props = {
-  children: React$Node,
-  filled?: boolean,
-  disabled?: boolean,
-  required?: boolean,
-};
+type Props = {|
+  +children: React$Node,
+  +filled?: boolean,
+  +disabled?: boolean,
+  +required?: boolean,
+|};
 
 const colors = {
   colorTextError: '#d21c1c',
@@ -33,7 +33,7 @@ const Asteriks = ({ filled, children }) => (
 const FormLabel = ({ children, required, filled, disabled }: Props) => (
   <View style={[styles.formLabel, { color: getColor(filled, disabled) }]}>
     {required && <Asteriks filled={filled}>* </Asteriks>}
-    <Text>{children}</Text>
+    <Text style={styles.labelText}>{children}</Text>
   </View>
 );
 
@@ -42,10 +42,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 14,
   },
+  labelText: {
+    fontSize: 14,
+  },
   formLabel: {
     flexDirection: 'row',
-    fontSize: 14,
-    lineHeight: 1.4,
     marginBottom: 4,
   },
 });

@@ -6,16 +6,16 @@ import { TextInput as RNTextInput, View } from 'react-native';
 import { StyleSheet } from '..';
 import FormLabel from './FormLabel';
 
-type Props = {
+type Props = {|
   +size?: 'small' | 'normal',
   +placeholder?: string,
   +value?: string,
   +disabled?: boolean,
   +onFocus?: () => void | Promise<any>,
   +onBlur?: () => void | Promise<any>,
-  required?: boolean,
+  +required?: boolean,
   +label: string,
-};
+|};
 
 type State = {
   isFocused: boolean,
@@ -29,9 +29,7 @@ const colors = {
   borderColorInputFocus: '#0176D2',
 };
 
-const getFontSize = size => (size === 'small' ? 14 : 14);
 const getHeight = size => (size === 'small' ? 32 : 44);
-const getPadding = size => (size === 'small' ? 12 : 12);
 const getColor = disabled =>
   disabled ? colors.colorTextInputDisabled : colors.colorTextInput;
 const getBorderColor = isFocused =>
@@ -48,14 +46,24 @@ class TextInput extends React.Component<Props, State> {
     }));
   };
 
+  onFocus = () => {
+    const { onFocus } = this.props;
+    this.toggleFocus();
+    return onFocus && onFocus();
+  };
+
+  onBlur = () => {
+    const { onBlur } = this.props;
+    this.toggleFocus();
+    return onBlur && onBlur();
+  };
+
   render() {
     const {
       placeholder,
       size = 'normal',
       value,
       disabled,
-      onFocus,
-      onBlur,
       label,
       required,
     } = this.props;
@@ -72,28 +80,21 @@ class TextInput extends React.Component<Props, State> {
             styles.inputContainer,
             {
               height: getHeight(size),
-              paddingHorizontal: getPadding(size),
               lineHeight: getHeight(size),
               borderColor: getBorderColor(isFocused),
             },
           ]}
         >
           <RNTextInput
-            onFocus={() => {
-              this.toggleFocus();
-              onFocus && onFocus();
-            }}
-            onBlur={() => {
-              this.toggleFocus();
-              onBlur && onBlur();
-            }}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
             placeholderTextColor={colors.colorPlaceholderInput}
             editable={!disabled}
             placeholder={placeholder}
             value={value}
             style={[
+              styles.textInput,
               {
-                fontSize: getFontSize(size),
                 color: getColor(disabled),
               },
             ]}
@@ -112,6 +113,14 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderRadius: 3,
+    paddingHorizontal: 12,
+  },
+  textInput: {
+    width: '100%',
+    fontSize: 14,
+    web: {
+      outline: 'none',
+    },
   },
 });
 
