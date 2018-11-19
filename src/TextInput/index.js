@@ -102,8 +102,8 @@ class TextInput extends React.Component<Props, State> {
               ? styles.inputContainerDisabled
               : styles.inputContainerDefault,
             focused
-              ? styles.inputContainerFocused
-              : styles.inputContainerDefault,
+              ? styles.inputContainerBorderFocused
+              : styles.inputContainerBorderDefault,
           ]}
         >
           {prefix && <Prefix size={size}>{prefix}</Prefix>}
@@ -173,10 +173,10 @@ const styles = StyleSheet.create({
   smallSize: {
     height: 32,
   },
-  inputContainerFocused: {
+  inputContainerBorderFocused: {
     borderColor: defaultTokens.borderColorInputFocus,
   },
-  inputContainerDefault: {
+  inputContainerBorderDefault: {
     borderColor: defaultTokens.borderColorInput,
   },
   inlineLabel: {
