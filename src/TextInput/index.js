@@ -26,6 +26,7 @@ type State = {
 };
 
 const getHeight = size => (size === 'small' ? 32 : 44);
+const getIconSize = size => (size === 'small' ? 16 : 24);
 const getColor = disabled =>
   disabled
     ? defaultTokens.orbit.colorTextInputDisabled
@@ -35,28 +36,27 @@ const getBorderColor = isFocused =>
     ? defaultTokens.orbit.borderColorInputFocus
     : defaultTokens.orbit.borderColorInput;
 
-const Prefix = ({ children }) => {
-  if (typeof children === 'string') {
-    return (
-      <View style={styles.prefix}>
-        <Text style={styles.textInputPrefix}>{children}</Text>
-      </View>
-    );
+const Prefix = ({ children, size }) => {
+  if (typeof children === 'object' && children.props) {
+    const icon = {
+      ...children,
+      props: {
+        ...children.props,
+        color: defaultTokens.orbit.colorIconInput,
+        size: getIconSize(size),
+      },
+    };
+    return <View style={styles.prefix}>{icon}</View>;
   }
-  return <View style={styles.prefix}>{children}</View>;
+  return (
+    <View style={styles.prefix}>
+      <Text style={styles.textInputPrefix}>{children}</Text>
+    </View>
+  );
 };
 
 const InlineLabel = ({ children }) => (
-  <View
-    style={{
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingEnd: 12,
-    }}
-  >
-    {children}
-  </View>
+  <View style={styles.inlineLabel}>{children}</View>
 );
 
 class TextInput extends React.Component<Props, State> {
@@ -111,8 +111,7 @@ class TextInput extends React.Component<Props, State> {
             },
           ]}
         >
-          {/* Need to add support for icon prefix */}
-          {prefix && <Prefix>{prefix}</Prefix>}
+          {prefix && <Prefix size={size}>{prefix}</Prefix>}
           {label && inlineLabel && (
             <InlineLabel>
               <FormLabel filled={!!value} inlineLabel required={required}>
@@ -157,6 +156,12 @@ const styles = StyleSheet.create({
     web: {
       outline: 'none',
     },
+  },
+  inlineLabel: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingEnd: 12,
   },
   prefix: {
     alignItems: 'center',
