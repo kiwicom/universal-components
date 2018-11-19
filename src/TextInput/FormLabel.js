@@ -4,25 +4,25 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 
 import { StyleSheet } from '..';
+import defaultTokens from '../defaultTokens';
 
 type Props = {|
   +children: React$Node,
   +filled?: boolean,
   +disabled?: boolean,
   +required?: boolean,
+  +inlineLabel?: boolean,
 |};
 
-const colors = {
-  colorTextError: '#d21c1c',
-  colorFormLabelFilled: '#7f91a8',
-  colorFormLabel: '#46515e',
-};
-
 const getAsteriksColor = filled =>
-  !filled ? colors.colorTextError : colors.colorFormLabelFilled;
+  !filled
+    ? defaultTokens.orbit.colorTextError
+    : defaultTokens.orbit.colorFormLabelFilled;
 
 const getColor = (filled, disabled) =>
-  !filled || disabled ? colors.colorFormLabel : colors.colorFormLabelFilled;
+  !filled || disabled
+    ? defaultTokens.orbit.colorFormLabel
+    : defaultTokens.orbit.colorFormLabelFilled;
 
 const Asteriks = ({ filled, children }) => (
   <Text style={[styles.asteriks, { color: getAsteriksColor(filled) }]}>
@@ -30,9 +30,19 @@ const Asteriks = ({ filled, children }) => (
   </Text>
 );
 
-const FormLabel = ({ children, required, filled, disabled }: Props) => (
-  <View style={[styles.formLabel, { color: getColor(filled, disabled) }]}>
-    {required && <Asteriks filled={filled}>* </Asteriks>}
+const FormLabel = ({
+  children,
+  required,
+  filled,
+  disabled,
+  inlineLabel,
+}: Props) => (
+  <View style={inlineLabel ? styles.inlineFormLabel : styles.formLabel}>
+    {required && (
+      <Asteriks style={{ color: getColor(filled, disabled) }} filled={filled}>
+        *{' '}
+      </Asteriks>
+    )}
     <Text style={styles.labelText}>{children}</Text>
   </View>
 );
@@ -44,6 +54,11 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 14,
+  },
+  inlineFormLabel: {
+    flexDirection: 'row',
+    marginBottom: 0,
+    flexWrap: 'nowrap',
   },
   formLabel: {
     flexDirection: 'row',

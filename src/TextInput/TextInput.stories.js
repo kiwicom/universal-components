@@ -5,15 +5,28 @@ import { storiesOf } from '@storybook/react-native';
 import TextInput from './index';
 
 storiesOf('TextInput', module)
-  .add('default', () => (
-    <TextInput label="Label" placeholder="Type something" />
+  .add('Default input', () => (
+    <TextInput label="Label" value="" placeholder="Type something" />
   ))
-  .add('small', () => (
-    <TextInput label="Label" placeholder="Type something" size="small" />
+  .add('Small input', () => (
+    <TextInput
+      size="small"
+      label="Label"
+      value=""
+      placeholder="Type something"
+    />
   ))
-  .add('required filed', () => (
-    <TextInput label="Label" placeholder="Type something" required />
+  .add('Required field', () => (
+    <TextInput label="Label" value="" placeholder="Type something" required />
   ))
-  .add('with text prefix', () => (
-    <TextInput label="Label" placeholder="Type something" required prefix="$" />
+  .add('With text prefix', () => (
+    <TextInput label="Label" value="" placeholder="Type something" prefix="$" />
+  ))
+  .add('Compact input', () => (
+    <TextInput
+      label="Label"
+      inlineLabel
+      value=""
+      placeholder="Type something"
+    />
   ));

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { TextInput as RNTextInput, View, Text } from 'react-native';
 
 import { StyleSheet } from '..';
+import defaultTokens from '../defaultTokens';
 import FormLabel from './FormLabel';
 
 type Props = {|
@@ -11,32 +12,28 @@ type Props = {|
   +placeholder?: string,
   +value?: string,
   +disabled?: boolean,
-  +onFocus?: () => void | Promise<any>,
-  +onBlur?: () => void | Promise<any>,
   +required?: boolean,
+  +inlineLabel?: boolean,
   +label: string,
   +prefix?: React$Node,
+  +onFocus?: () => void | Promise<any>,
+  +onBlur?: () => void | Promise<any>,
+  +onChange?: () => void | Promise<any>,
 |};
 
 type State = {
   isFocused: boolean,
 };
 
-const colors = {
-  colorTextInputDisabled: '#bac7d5',
-  colorTextInput: '#46515e',
-  borderColorInput: '#bac7d5',
-  colorPlaceholderInput: '#bac7d5',
-  borderColorInputFocus: '#0176D2',
-  colorIconInput: '#bac7d5',
-  colorTextInputPrefix: '#7f91a8',
-};
-
 const getHeight = size => (size === 'small' ? 32 : 44);
 const getColor = disabled =>
-  disabled ? colors.colorTextInputDisabled : colors.colorTextInput;
+  disabled
+    ? defaultTokens.orbit.colorTextInputDisabled
+    : defaultTokens.orbit.colorTextInput;
 const getBorderColor = isFocused =>
-  isFocused ? colors.borderColorInputFocus : colors.borderColorInput;
+  isFocused
+    ? defaultTokens.orbit.borderColorInputFocus
+    : defaultTokens.orbit.borderColorInput;
 
 const Prefix = ({ children }) => {
   if (typeof children === 'string') {
@@ -48,6 +45,19 @@ const Prefix = ({ children }) => {
   }
   return <View style={styles.prefix}>{children}</View>;
 };
+
+const InlineLabel = ({ children }) => (
+  <View
+    style={{
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingEnd: 12,
+    }}
+  >
+    {children}
+  </View>
+);
 
 class TextInput extends React.Component<Props, State> {
   state = {
@@ -81,12 +91,13 @@ class TextInput extends React.Component<Props, State> {
       label,
       required,
       prefix,
+      onChange,
+      inlineLabel,
     } = this.props;
     const { isFocused } = this.state;
     return (
       <View>
-        {/* Need to add support for inlineLabel */}
-        {label && (
+        {label && !inlineLabel && (
           <FormLabel filled={!!value} required={required}>
             {label}
           </FormLabel>
@@ -102,10 +113,18 @@ class TextInput extends React.Component<Props, State> {
         >
           {/* Need to add support for icon prefix */}
           {prefix && <Prefix>{prefix}</Prefix>}
+          {label && inlineLabel && (
+            <InlineLabel>
+              <FormLabel filled={!!value} inlineLabel required={required}>
+                {label}
+              </FormLabel>
+            </InlineLabel>
+          )}
           <RNTextInput
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            placeholderTextColor={colors.colorPlaceholderInput}
+            onChangeText={onChange}
+            placeholderTextColor={defaultTokens.orbit.colorPlaceholderInput}
             editable={!disabled}
             placeholder={placeholder}
             value={value}
@@ -140,13 +159,13 @@ const styles = StyleSheet.create({
     },
   },
   prefix: {
-    color: colors.colorIconInput,
+    color: defaultTokens.orbit.colorIconInput,
     alignItems: 'center',
     justifyContent: 'center',
     paddingEnd: 12,
   },
   textInputPrefix: {
-    color: colors.colorTextInputPrefix,
+    color: defaultTokens.orbit.colorTextInputPrefix,
   },
 });
 
