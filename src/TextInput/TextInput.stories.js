@@ -6,27 +6,17 @@ import TextInput from './index';
 
 storiesOf('TextInput', module)
   .add('Default input', () => (
-    <TextInput label="Label" value="" placeholder="Type something" />
+    <TextInput label="Label" placeholder="Type something" />
   ))
   .add('Small input', () => (
-    <TextInput
-      size="small"
-      label="Label"
-      value=""
-      placeholder="Type something"
-    />
+    <TextInput size="small" label="Label" placeholder="Type something" />
   ))
   .add('Required field', () => (
-    <TextInput label="Label" value="" placeholder="Type something" required />
+    <TextInput label="Label" placeholder="Type something" required />
   ))
   .add('With text prefix', () => (
-    <TextInput label="Label" value="" placeholder="Type something" prefix="$" />
+    <TextInput label="Label" placeholder="Type something" prefix="$" />
   ))
   .add('Compact input', () => (
-    <TextInput
-      label="Label"
-      inlineLabel
-      value=""
-      placeholder="Type something"
-    />
+    <TextInput label="Label" inlineLabel placeholder="Type something" />
   ));

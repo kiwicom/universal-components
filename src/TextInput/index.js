@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
     },
   },
   prefix: {
-    color: defaultTokens.orbit.colorIconInput,
     alignItems: 'center',
     justifyContent: 'center',
     paddingEnd: 12,
