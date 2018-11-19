@@ -12,6 +12,7 @@ module.exports = {
   "rules": {
     "lines-between-class-members": [ERROR, "always", { exceptAfterSingleLine: true }],
     "no-lonely-if": ERROR,
+    "react/jsx-no-bind": [ERROR, { "allowArrowFunctions": false }],
     "no-else-return": ERROR,
     "prefer-const": ERROR,
     "no-duplicate-imports": ERROR,
@@ -43,6 +44,7 @@ module.exports = {
           }
         ]
       }
-    ]
+    ],
+    "react/default-props-match-prop-types": OFF,
   },
-}
+};

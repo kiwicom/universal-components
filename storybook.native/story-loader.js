@@ -5,15 +5,15 @@
 // https://github.com/elderfo/react-native-storybook-loader.git
 
 function loadStories() {
+  require('../src/native/Icon/Icon.stories');
   require('../src/Text/Text.stories');
   require('../src/TextInput/TextInput.stories');
-  
 }
 
 const stories = [
+  '../src/native/Icon/Icon.stories',
   '../src/Text/Text.stories',
   '../src/TextInput/TextInput.stories',
-  
 ];
 
 module.exports = {

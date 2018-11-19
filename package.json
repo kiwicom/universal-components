@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "The proof of concept of universal components.",
   "main": "lib/index.js",
+  "private": true,
+  "workspaces": ["src/native/*"],
   "scripts": {
     "native": "node node_modules/react-native/local-cli/cli.js start",
     "storybook": "start-storybook -p 9009 -c .storybook",
@@ -71,6 +73,7 @@
     "react-test-renderer": "^16.6.3",
     "regenerator-runtime": "^0.12.1",
     "rimraf": "^2.6.2",
+    "snapshot-diff": "^0.4.0",
     "webpack": "^4.25.1"
   },
   "config": {
