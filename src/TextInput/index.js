@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { TextInput as RNTextInput, View, Text } from 'react-native';
+import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 
 import { StyleSheet } from '..';
-import defaultTokens from '../defaultTokens';
 import FormLabel from './FormLabel';
 
 type Props = {|
@@ -21,36 +21,24 @@ type Props = {|
   +onChange?: () => void | Promise<any>,
 |};
 
-type State = {
-  isFocused: boolean,
-};
-
-const getHeight = size => (size === 'small' ? 32 : 44);
-const getIconSize = size => (size === 'small' ? 16 : 24);
-const getColor = disabled =>
-  disabled
-    ? defaultTokens.orbit.colorTextInputDisabled
-    : defaultTokens.orbit.colorTextInput;
-const getBorderColor = isFocused =>
-  isFocused
-    ? defaultTokens.orbit.borderColorInputFocus
-    : defaultTokens.orbit.borderColorInput;
+type State = {|
+  focused: boolean,
+|};
 
 const Prefix = ({ children, size }) => {
-  if (typeof children === 'object' && children.props) {
-    const icon = {
-      ...children,
-      props: {
-        ...children.props,
-        color: defaultTokens.orbit.colorIconInput,
-        size: getIconSize(size),
-      },
-    };
-    return <View style={styles.prefix}>{icon}</View>;
-  }
+  const prefix = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        color: defaultTokens.colorIconInput,
+        size: size === 'small' ? 16 : 24,
+      });
+    }
+    return child;
+  });
+
   return (
     <View style={styles.prefix}>
-      <Text style={styles.textInputPrefix}>{children}</Text>
+      <Text style={styles.textInputPrefix}>{prefix}</Text>
     </View>
   );
 };
@@ -61,25 +49,29 @@ const InlineLabel = ({ children }) => (
 
 class TextInput extends React.Component<Props, State> {
   state = {
-    isFocused: false,
+    focused: false,
   };
 
   toggleFocus = () => {
     this.setState(state => ({
-      isFocused: !state.isFocused,
+      focused: !state.focused,
     }));
   };
 
   onFocus = () => {
-    const { onFocus } = this.props;
-    this.toggleFocus();
-    return onFocus && onFocus();
+    const { onFocus, disabled } = this.props;
+    if (!disabled) {
+      this.toggleFocus();
+      onFocus && onFocus();
+    }
   };
 
   onBlur = () => {
-    const { onBlur } = this.props;
-    this.toggleFocus();
-    return onBlur && onBlur();
+    const { onBlur, disabled } = this.props;
+    if (!disabled) {
+      this.toggleFocus();
+      onBlur && onBlur();
+    }
   };
 
   render() {
@@ -94,27 +86,35 @@ class TextInput extends React.Component<Props, State> {
       onChange,
       inlineLabel,
     } = this.props;
-    const { isFocused } = this.state;
+    const { focused } = this.state;
     return (
       <View>
         {label && !inlineLabel && (
-          <FormLabel filled={!!value} required={required}>
+          <FormLabel filled={!!value} required={required} disabled={disabled}>
             {label}
           </FormLabel>
         )}
         <View
           style={[
             styles.inputContainer,
-            {
-              height: getHeight(size),
-              borderColor: getBorderColor(isFocused),
-            },
+            size === 'normal' ? styles.normalSize : styles.smallSize,
+            disabled
+              ? styles.inputContainerDisabled
+              : styles.inputContainerDefault,
+            focused
+              ? styles.inputContainerFocused
+              : styles.inputContainerDefault,
           ]}
         >
           {prefix && <Prefix size={size}>{prefix}</Prefix>}
           {label && inlineLabel && (
             <InlineLabel>
-              <FormLabel filled={!!value} inlineLabel required={required}>
+              <FormLabel
+                filled={!!value}
+                inlineLabel
+                required={required}
+                disabled={disabled}
+              >
                 {label}
               </FormLabel>
             </InlineLabel>
@@ -123,15 +123,13 @@ class TextInput extends React.Component<Props, State> {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onChangeText={onChange}
-            placeholderTextColor={defaultTokens.orbit.colorPlaceholderInput}
+            placeholderTextColor={defaultTokens.colorPlaceholderInput}
             editable={!disabled}
             placeholder={placeholder}
             value={value}
             style={[
-              styles.textInput,
-              {
-                color: getColor(disabled),
-              },
+              styles.inputField,
+              disabled ? styles.inputFieldDisabled : styles.inputFieldDefault,
             ]}
           />
         </View>
@@ -150,12 +148,36 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 12,
   },
-  textInput: {
+  inputContainerDefault: {
+    backgroundColor: defaultTokens.backgroundInput,
+  },
+  inputContainerDisabled: {
+    backgroundColor: defaultTokens.backgroundInputDisabled,
+  },
+  inputField: {
     width: '100%',
     fontSize: 14,
     web: {
       outline: 'none',
     },
+  },
+  inputFieldDefault: {
+    color: defaultTokens.colorTextInput,
+  },
+  inputFieldDisabled: {
+    color: defaultTokens.colorTextInputDisabled,
+  },
+  normalSize: {
+    height: 44,
+  },
+  smallSize: {
+    height: 32,
+  },
+  inputContainerFocused: {
+    borderColor: defaultTokens.borderColorInputFocus,
+  },
+  inputContainerDefault: {
+    borderColor: defaultTokens.borderColorInput,
   },
   inlineLabel: {
     height: '100%',
@@ -169,7 +191,7 @@ const styles = StyleSheet.create({
     paddingEnd: 12,
   },
   textInputPrefix: {
-    color: defaultTokens.orbit.colorTextInputPrefix,
+    color: defaultTokens.colorTextInputPrefix,
   },
 });
 

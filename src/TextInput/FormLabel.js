@@ -1,10 +1,10 @@
 // @flow
 
 import * as React from 'react';
+import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 import { View, Text } from 'react-native';
 
 import { StyleSheet } from '..';
-import defaultTokens from '../defaultTokens';
 
 type Props = {|
   +children: React$Node,
@@ -14,20 +14,18 @@ type Props = {|
   +inlineLabel?: boolean,
 |};
 
-const getAsteriksColor = filled =>
-  !filled
-    ? defaultTokens.orbit.colorTextError
-    : defaultTokens.orbit.colorFormLabelFilled;
+const getAsteriksStyle = (filled, disabled) => {
+  if (disabled) {
+    return styles.asteriksFilled;
+  }
+  if (filled) {
+    return styles.asteriksDisabled;
+  }
+  return styles.asteriksDefault;
+};
 
-const getColor = (filled, disabled) =>
-  !filled || disabled
-    ? defaultTokens.orbit.colorFormLabel
-    : defaultTokens.orbit.colorFormLabelFilled;
-
-const Asteriks = ({ filled, children }) => (
-  <Text style={[styles.asteriks, { color: getAsteriksColor(filled) }]}>
-    {children}
-  </Text>
+const Asteriks = ({ filled, children, disabled }) => (
+  <Text style={getAsteriksStyle(filled, disabled)}>{children}</Text>
 );
 
 const FormLabel = ({
@@ -39,7 +37,7 @@ const FormLabel = ({
 }: Props) => (
   <View style={inlineLabel ? styles.inlineFormLabel : styles.formLabel}>
     {required && (
-      <Asteriks style={{ color: getColor(filled, disabled) }} filled={filled}>
+      <Asteriks filled={filled} disabled={disabled}>
         *{' '}
       </Asteriks>
     )}
@@ -48,9 +46,20 @@ const FormLabel = ({
 );
 
 const styles = StyleSheet.create({
-  asteriks: {
+  asteriksFilled: {
     fontWeight: '700',
     fontSize: 14,
+    color: defaultTokens.colorFormLabelFilled,
+  },
+  asteriksDisabled: {
+    fontWeight: '700',
+    fontSize: 14,
+    color: defaultTokens.colorFormLabel,
+  },
+  asteriksDefault: {
+    fontWeight: '700',
+    fontSize: 14,
+    color: defaultTokens.colorTextError,
   },
   labelText: {
     fontSize: 14,
