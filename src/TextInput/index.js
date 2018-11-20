@@ -15,7 +15,7 @@ type Props = {|
   +required?: boolean,
   +inlineLabel?: boolean,
   +label: string,
-  +prefix?: React$Node,
+  +prefix?: React.Node,
   +onFocus?: () => void | Promise<any>,
   +onBlur?: () => void | Promise<any>,
   +onChange?: () => void | Promise<any>,

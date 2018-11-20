@@ -7,7 +7,7 @@ import { View, Text } from 'react-native';
 import { StyleSheet } from '..';
 
 type Props = {|
-  +children: React$Node,
+  +children: React.Node,
   +filled?: boolean,
   +disabled?: boolean,
   +required?: boolean,
@@ -16,10 +16,10 @@ type Props = {|
 
 const getAsteriksStyle = (filled, disabled) => {
   if (disabled) {
-    return styles.asteriksFilled;
+    return styles.asteriksDisabled;
   }
   if (filled) {
-    return styles.asteriksDisabled;
+    return styles.asteriksFilled;
   }
   return styles.asteriksDefault;
 };
