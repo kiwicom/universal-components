@@ -5,16 +5,12 @@ import { View } from 'react-native';
 
 import Icon from '../Icon';
 import StyleSheet from '../PlatformStyleSheet/index';
-import { type StylePropType } from '../PlatformStyleSheet/StyleTypes';
-import GenericButtonWrapper from './GenericButtonWrapper';
 import ButtonTitle from './ButtonTitle';
 import type { ButtonType } from './ButtonTypes';
-import { textColor } from './styles';
+import { textColor, wrapperColor } from './styles';
 
 type Props = {|
   +children: React.Node,
-  +onPress: () => void,
-  +style?: StylePropType,
   +disabled?: boolean,
   +type?: ButtonType,
   +leftIcon?: React.Element<typeof Icon> | null,
@@ -23,18 +19,15 @@ type Props = {|
   +sublabel?: React.Node,
 |};
 
-export default function Button({
-  onPress,
+export default function ButtonInner({
   disabled = false,
-  type: originalType = 'primary',
-  style,
-  testID,
+  type = 'primary',
+  testID: testIDProps,
   children,
   leftIcon: originalleftIcon,
   rightIcon: originalRightIcon,
   sublabel,
 }: Props) {
-  const type = disabled ? 'disabled' : originalType;
   const leftIcon = originalleftIcon
     ? React.cloneElement(originalleftIcon, { color: textColor[type] })
     : originalleftIcon;
@@ -49,33 +42,34 @@ export default function Button({
     justifyContent = layout.spaceBetween;
   }
 
+  let testID;
+  if (testIDProps != null) {
+    testID = `ButtonInner${testIDProps}`;
+  }
+
   return (
-    <GenericButtonWrapper
-      disabled={!onPress || disabled}
-      onPress={onPress}
+    <View
+      style={[
+        styleSheet.buttonWrapper,
+        disabled && styleSheet.disabled,
+        theme(type).wrapper,
+        justifyContent,
+      ]}
       testID={testID}
-      type={type}
-      style={[justifyContent, style]}
     >
-      <React.Fragment>
-        <View style={layout.row}>
-          {leftIcon != null && (
-            <View style={layout.rightSpace}>{leftIcon}</View>
-          )}
-          <ButtonTitle text={children} type={type} />
-        </View>
-        <View style={layout.row}>
-          {sublabel != null && (
-            <View style={layout.row}>
-              <ButtonTitle text={sublabel} type={type} variant="sublabel" />
-            </View>
-          )}
-          {rightIcon != null && (
-            <View style={layout.leftSpace}>{rightIcon}</View>
-          )}
-        </View>
-      </React.Fragment>
-    </GenericButtonWrapper>
+      <View style={layout.row}>
+        {leftIcon != null && <View style={layout.rightSpace}>{leftIcon}</View>}
+        <ButtonTitle text={children} type={type} />
+      </View>
+      <View style={layout.row}>
+        {sublabel != null && (
+          <View style={layout.row}>
+            <ButtonTitle text={sublabel} type={type} variant="sublabel" />
+          </View>
+        )}
+        {rightIcon != null && <View style={layout.leftSpace}>{rightIcon}</View>}
+      </View>
+    </View>
   );
 }
 
@@ -85,9 +79,15 @@ const layout = StyleSheet.create({
   },
   spaceBetween: {
     justifyContent: 'space-between',
+    web: {
+      justifyContent: 'center',
+    },
   },
   flexStart: {
     justifyContent: 'flex-start',
+    web: {
+      justifyContent: 'center',
+    },
   },
   row: {
     flexDirection: 'row',
@@ -100,3 +100,25 @@ const layout = StyleSheet.create({
     marginEnd: 14,
   },
 });
+
+const styleSheet = StyleSheet.create({
+  buttonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 11,
+    height: 44,
+    borderRadius: 6,
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+});
+
+const theme = (type: ButtonType = 'primary') =>
+  StyleSheet.create({
+    wrapper: {
+      backgroundColor: wrapperColor[type],
+    },
+  });
