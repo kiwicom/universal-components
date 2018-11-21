@@ -121,7 +121,7 @@ storiesOf('Button', module)
         Google button
       </Button>
       <Separator />
-      <Button onPress={noop} type="disabled">
+      <Button onPress={noop} disabled>
         Disabled button
       </Button>
       <Button onPress={noop} type="primary" leftIcon={<Icon name="calendar" />}>
@@ -170,7 +170,7 @@ storiesOf('Button', module)
     </Button>
   ))
   .add('disabled', () => (
-    <Button onPress={noop} type="disabled">
+    <Button onPress={noop} disabled>
       Some random text
     </Button>
   ));

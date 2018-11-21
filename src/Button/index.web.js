@@ -71,9 +71,9 @@ export default function Button({
   return (
     <button
       type="button"
-      onClick={onPress} // seems like this does not work...
+      onClick={onPress}
       testID={testID}
-      disabled
+      disabled={disabled}
       style={{
         border: 0,
         padding: 0,
