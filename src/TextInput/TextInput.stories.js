@@ -3,7 +3,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import TextInput from './index';
-import Icon from '../native/Icon';
+import Icon from '../Icon';
 import ServiceLogo from '../ServiceLogo/component';
 
 storiesOf('TextInput', module)
