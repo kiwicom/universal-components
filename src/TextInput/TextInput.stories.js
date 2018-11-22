@@ -9,7 +9,7 @@ import TextInput from './index';
 import Icon from '../Icon';
 import ServiceLogo from '../ServiceLogo/component';
 
-import iconsMap from '../native/Icon/icons.json';
+import iconsMap from '../Icon/icons.json';
 
 storiesOf('TextInput', module)
   .addDecorator(withKnobs)
