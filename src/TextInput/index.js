@@ -126,6 +126,7 @@ class TextInput extends React.Component<Props, State> {
       type = 'text',
       value,
       error,
+      help,
     } = this.props;
     const { focused } = this.state;
     return (
@@ -179,6 +180,9 @@ class TextInput extends React.Component<Props, State> {
 
             {suffix != null && <Suffix>{suffix}</Suffix>}
           </View>
+          {help != null && !error && (
+            <FormFeedback type="help">{help}</FormFeedback>
+          )}
           {error != null && <FormFeedback type="error">{error}</FormFeedback>}
         </View>
       </TouchableWithoutFeedback>

@@ -52,6 +52,7 @@ storiesOf('TextInput', module)
       'search'
     );
     const error = text('Error', '');
+    const help = text('Help', '');
 
     return (
       <TextInput
@@ -69,6 +70,7 @@ storiesOf('TextInput', module)
         onFocus={action('focus')}
         onBlur={action('blur')}
         error={error}
+        help={help}
       />
     );
   })
@@ -118,7 +120,15 @@ storiesOf('TextInput', module)
       label="Label"
       placeholder="Type something"
       onChangeText={action('change')}
-      error="Error"
+      error="I'm Error"
+    />
+  ))
+  .add('Help input', () => (
+    <TextInput
+      label="Label"
+      placeholder="Type something"
+      onChangeText={action('change')}
+      help="I'm Helper"
     />
   ))
   .add('Required field', () => (
