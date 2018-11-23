@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { storiesOf } from '@storybook/react-native';
-import { boolean, select, withKnobs } from '@storybook/addon-knobs';
+import { boolean, select, withKnobs, text } from '@storybook/addon-knobs';
 import Text from './index';
 
 const style = {
@@ -56,17 +56,24 @@ storiesOf('Text', module)
     );
     const uppercase = boolean('Uppercase', false);
     const italic = boolean('Italic', false);
+    const dataTest = text('dataTest', 'test');
 
-    return (
-      <Text
-        type={type}
-        size={size}
-        fontWeight={weight}
-        align={align}
-        uppercase={uppercase}
-        italic={italic}
-      >
-        {customText}
-      </Text>
-    );
+    let element;
+    if (Platform.OS === 'web') {
+      element = select('element', ['span', 'p', 'div'], 'span');
+    }
+
+    const props = {
+      type,
+      size,
+      weight,
+      align,
+      uppercase,
+      italic,
+      element,
+      dataTest,
+    };
+
+    // $FlowFixMe
+    return React.createElement(Text, props, customText);
   });

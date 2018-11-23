@@ -24,7 +24,7 @@ export const fontWeight = {
   bold: defaultTokens.fontWeightBold,
 };
 
-export const align = {
+export const textAlign = {
   center: 'center',
   justify: 'justify',
   left: 'left',

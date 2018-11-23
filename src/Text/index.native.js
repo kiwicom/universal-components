@@ -1,23 +1,23 @@
 // @flow
 
 import * as React from 'react';
-import { Text as RNText, Platform } from 'react-native';
-import { defaultTokens } from '@kiwicom/orbit-design-tokens';
+import { Text as RNText } from 'react-native';
 import { StyleSheet } from '../index';
 import { createStylesGenerator } from '../utils';
 import {
-  align as alignTypes,
+  textAlign,
   fontSize,
   fontWeight as fontWeightTypes,
   textColor,
-} from './styles';
+} from './constants';
+import { shared } from './styles';
 
 import type { TextType } from './TextTypes';
 
 const colorGen = createStylesGenerator('color', textColor);
 const fontWeightGen = createStylesGenerator('fontWeight', fontWeightTypes);
 const fontSizeGen = createStylesGenerator('fontSize', fontSize);
-const alingGen = createStylesGenerator('textAlign', alignTypes);
+const alingGen = createStylesGenerator('textAlign', textAlign);
 
 const Text = ({
   children,
@@ -26,7 +26,7 @@ const Text = ({
   dataTest,
   align = 'left',
   type = 'primary',
-  fontWeight = 'normal',
+  weight = 'normal',
   size = 'normal',
 }: TextType) => (
   <RNText
@@ -35,7 +35,7 @@ const Text = ({
       styles.text,
       italic && styles.italic,
       uppercase && styles.uppercase,
-      styles[fontWeight],
+      styles[weight],
       styles[size],
       styles[type],
       styles[align],
@@ -47,8 +47,7 @@ const Text = ({
 
 const styles = StyleSheet.create({
   text: {
-    margin: 0,
-    fontFamily: Platform.OS === 'web' ? defaultTokens.fontFamily : 'Roboto',
+    ...shared,
   },
   italic: {
     fontStyle: 'italic',

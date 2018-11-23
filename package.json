@@ -32,7 +32,8 @@
   "author": "kiwi.com",
   "license": "MIT",
   "dependencies": {
-    "@kiwicom/orbit-design-tokens": "^0.2.5"
+    "@kiwicom/orbit-design-tokens": "^0.2.5",
+    "styled-components": "^4.1.1"
   },
   "peerDependencies": {
     "react": "16.6.1",
