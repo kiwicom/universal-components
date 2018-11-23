@@ -51,6 +51,7 @@ storiesOf('TextInput', module)
       Object.keys(iconsMap),
       'search'
     );
+    const error = text('Error', '');
 
     return (
       <TextInput
@@ -67,6 +68,7 @@ storiesOf('TextInput', module)
         onChangeText={action('change')}
         onFocus={action('focus')}
         onBlur={action('blur')}
+        error={error}
       />
     );
   })
@@ -109,6 +111,14 @@ storiesOf('TextInput', module)
       placeholder="Type something"
       type="password"
       onChangeText={action('change')}
+    />
+  ))
+  .add('Error input', () => (
+    <TextInput
+      label="Label"
+      placeholder="Type something"
+      onChangeText={action('change')}
+      error="Error"
     />
   ))
   .add('Required field', () => (

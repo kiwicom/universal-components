@@ -11,9 +11,9 @@ import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 
 import StyleSheet from '../PlatformStyleSheet';
 import FormLabel from './FormLabel';
+import FormFeedback from '../FormFeedback';
 import { createStylesGenerator } from '../utils';
 import { fontSize, height } from './styles';
-
 import type { Props, State } from './TextInputTypes';
 
 const fontSizeGen = createStylesGenerator('fontSize', fontSize);
@@ -125,6 +125,7 @@ class TextInput extends React.Component<Props, State> {
       suffix,
       type = 'text',
       value,
+      error,
     } = this.props;
     const { focused } = this.state;
     return (
@@ -139,12 +140,9 @@ class TextInput extends React.Component<Props, State> {
             style={[
               styles.inputContainer,
               styles[size],
-              disabled
-                ? styles.inputContainerDisabled
-                : styles.inputContainerDefault,
-              focused
-                ? styles.inputContainerBorderFocused
-                : styles.inputContainerBorderDefault,
+              disabled && styles.inputContainerDisabled,
+              focused && styles.inputContainerBorderFocused,
+              error && !focused && styles.inputContainerBorderError,
             ]}
           >
             {prefix != null && <Prefix size={size}>{prefix}</Prefix>}
@@ -174,13 +172,14 @@ class TextInput extends React.Component<Props, State> {
               secureTextEntry={type === 'password'}
               style={[
                 styles.inputField,
-                disabled ? styles.inputFieldDisabled : styles.inputFieldDefault,
+                disabled && styles.inputFieldDisabled,
                 styles[size],
               ]}
             />
 
             {suffix != null && <Suffix>{suffix}</Suffix>}
           </View>
+          {error != null && <FormFeedback type="error">{error}</FormFeedback>}
         </View>
       </TouchableWithoutFeedback>
     );
@@ -201,8 +200,7 @@ const styles = StyleSheet.create({
     borderWidth: parseFloat(defaultTokens.borderWidthInput),
     borderRadius: parseFloat(defaultTokens.borderRadiusNormal),
     paddingHorizontal: parseFloat(defaultTokens.spaceSmall),
-  },
-  inputContainerDefault: {
+    borderColor: defaultTokens.borderColorInput,
     backgroundColor: defaultTokens.backgroundInput,
   },
   inputContainerDisabled: {
@@ -215,8 +213,6 @@ const styles = StyleSheet.create({
     web: {
       outline: 'none',
     },
-  },
-  inputFieldDefault: {
     color: defaultTokens.colorTextInput,
   },
   inputFieldDisabled: {
@@ -225,8 +221,8 @@ const styles = StyleSheet.create({
   inputContainerBorderFocused: {
     borderColor: defaultTokens.borderColorInputFocus,
   },
-  inputContainerBorderDefault: {
-    borderColor: defaultTokens.borderColorInput,
+  inputContainerBorderError: {
+    borderColor: defaultTokens.borderColorInputError,
   },
   inlineLabel: {
     height: '100%',

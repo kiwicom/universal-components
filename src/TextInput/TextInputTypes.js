@@ -16,6 +16,7 @@ export type Props = {|
   +onFocus?: () => void | Promise<any>,
   +onBlur?: () => void | Promise<any>,
   +onChangeText?: string => void | Promise<any>,
+  +error?: React.Node,
 |};
 
 export type State = {|
