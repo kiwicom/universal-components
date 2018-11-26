@@ -5,6 +5,7 @@ import Icon from '../Icon';
 
 import type { ButtonType } from './ButtonTypes';
 
+import { wrapperStyle, disabledStyle, displayBlock } from './styles/index.web';
 import ButtonInner from './ButtonInner';
 
 type Props = {|
@@ -42,25 +43,15 @@ export default function Button({
     rightIcon,
   };
 
-  const disabledStyle = disabled
-    ? { pointerEvents: 'none', cursor: 'initial' }
-    : { pointerEvents: 'auto', cursor: 'pointer' };
-
-  const displayBlock = block
-    ? { display: 'block', width: '100%' }
-    : { display: 'inline-block', width: width || 'inherit' };
-
   if (href) {
     return (
       <a
         testID={testID}
         href={href}
         style={{
-          border: 0,
-          padding: 0,
-          textDecoration: 'none',
-          ...displayBlock,
-          ...disabledStyle,
+          ...wrapperStyle,
+          ...displayBlock(block, width),
+          ...disabledStyle(disabled),
         }}
       >
         <ButtonInner {...buttonInnerProps} />
@@ -75,11 +66,9 @@ export default function Button({
       testID={testID}
       disabled={disabled}
       style={{
-        border: 0,
-        padding: 0,
-        textDecoration: 'none',
-        ...displayBlock,
-        ...disabledStyle,
+        ...wrapperStyle,
+        ...displayBlock(block, width),
+        ...disabledStyle(disabled),
       }}
     >
       <ButtonInner {...buttonInnerProps} />
