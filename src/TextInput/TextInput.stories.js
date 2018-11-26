@@ -3,7 +3,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
+import {
+  boolean,
+  select,
+  text,
+  withKnobs,
+  number,
+} from '@storybook/addon-knobs';
 
 import TextInput from './index';
 import Icon from '../Icon';
@@ -21,6 +27,8 @@ storiesOf('TextInput', module)
     const placeholder = text('Placeholder', 'Placeholder');
     const disabled = boolean('Disabled', false);
     const required = boolean('Required', false);
+    const maxLength = number('Max length', undefined);
+    const minLength = number('Min length', undefined);
     const type = select(
       'Type',
       ['text', 'password', 'email', 'number'],
@@ -71,6 +79,8 @@ storiesOf('TextInput', module)
         onBlur={action('blur')}
         error={error}
         help={help}
+        maxLength={maxLength}
+        minLength={minLength}
       />
     );
   })
@@ -129,6 +139,24 @@ storiesOf('TextInput', module)
       placeholder="Type something"
       onChangeText={action('change')}
       help="I'm Helper"
+    />
+  ))
+  .add('Input with max length', () => (
+    <TextInput
+      size="small"
+      label="Label"
+      placeholder="Type something"
+      onChangeText={action('change')}
+      maxLength={5}
+    />
+  ))
+  .add('Input with min length', () => (
+    <TextInput
+      size="small"
+      label="Label"
+      placeholder="Type something"
+      onChangeText={action('change')}
+      minLength={3}
     />
   ))
   .add('Required field', () => (
