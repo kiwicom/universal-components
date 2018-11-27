@@ -4,17 +4,17 @@ import * as React from 'react';
 import {
   TextInput as RNTextInput,
   View,
-  Text,
   TouchableWithoutFeedback,
   TouchableOpacity,
   Platform,
 } from 'react-native';
 import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 
-import StyleSheet from '../PlatformStyleSheet';
+import Text from '../Text';
 import FormLabel from './FormLabel';
 import Icon from '../Icon';
 import FormFeedback from '../FormFeedback';
+import StyleSheet from '../PlatformStyleSheet';
 import { createStylesGenerator } from '../utils';
 import { fontSize, height } from './styles';
 
