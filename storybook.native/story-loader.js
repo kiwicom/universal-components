@@ -1,4 +1,4 @@
-
+// @flow
 // Auto-generated file created by react-native-storybook-loader
 // Do not edit.
 //
@@ -11,9 +11,9 @@ function loadStories() {
   require('../src/FilterButton/FilterButton.stories');
   require('../src/Icon/Icon.stories');
   require('../src/ServiceLogo/ServiceLogo.stories');
+  require('../src/Stepper/Stepper.stories');
   require('../src/Text/Text.stories');
   require('../src/TextInput/TextInput.stories');
-  
 }
 
 const stories = [
@@ -23,9 +23,9 @@ const stories = [
   '../src/FilterButton/FilterButton.stories',
   '../src/Icon/Icon.stories',
   '../src/ServiceLogo/ServiceLogo.stories',
+  '../src/Stepper/Stepper.stories',
   '../src/Text/Text.stories',
   '../src/TextInput/TextInput.stories',
-  
 ];
 
 module.exports = {
