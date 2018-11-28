@@ -20,6 +20,7 @@ export type Props = {|
   +onChangeText?: string => void | Promise<any>,
   +error?: React.Node,
   +help?: React.Node,
+  +status?: 'default' | 'success' | 'warning', // this prop is supported only on mobile
 |};
 
 export type State = {|
