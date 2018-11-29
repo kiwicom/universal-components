@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { Platform } from 'react-native';
 import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
 import {
@@ -11,48 +12,53 @@ import {
   number,
 } from '@storybook/addon-knobs';
 
-import TextInput from './index';
-import Icon from '../Icon';
-import ServiceLogo from '../ServiceLogo/component';
+import { TextInput } from '.';
+import { Icon } from '../Icon';
+import { ServiceLogo } from '../ServiceLogo';
 
 import iconsMap from '../Icon/icons.json';
 
-storiesOf('TextInput', module)
+const stories = storiesOf('TextInput', module)
   .addDecorator(withKnobs)
   .add('Playground', () => {
     const size = select('Size', ['small', 'normal'], 'normal');
     const label = text('Label', 'Label');
-    const inlineLabel = boolean('Inline label', false);
+    let inlineLabel;
+    let serviceLogoName = 'Visa';
+    let minLength = 0;
+    if (Platform.OS === 'web') {
+      inlineLabel = boolean('Inline label', false);
+      minLength = number('Min length', 0);
+      serviceLogoName = select(
+        'Suffix service logo',
+        [
+          'AirHelp',
+          'Amex',
+          'AxaAssistance',
+          'DinersClub',
+          'JCB',
+          'Maestro',
+          'MasterCard',
+          'MIR',
+          'NewYorkTimes',
+          'NortonSecured',
+          'TravelPulse',
+          'Visa',
+          'VisaHQ',
+          'Zooz',
+        ],
+        'Visa'
+      );
+    }
     const value = text('Value', '');
     const placeholder = text('Placeholder', 'Placeholder');
     const disabled = boolean('Disabled', false);
     const required = boolean('Required', false);
     const maxLength = number('Max length', 100);
-    const minLength = number('Min length', 0);
     const type = select(
       'Type',
       ['text', 'password', 'email', 'number'],
       'text'
-    );
-    const serviceLogoName = select(
-      'Suffix service logo',
-      [
-        'AirHelp',
-        'Amex',
-        'AxaAssistance',
-        'DinersClub',
-        'JCB',
-        'Maestro',
-        'MasterCard',
-        'MIR',
-        'NewYorkTimes',
-        'NortonSecured',
-        'TravelPulse',
-        'Visa',
-        'VisaHQ',
-        'Zooz',
-      ],
-      'Visa'
     );
     const iconName = select(
       'Prefix icon name',
@@ -114,7 +120,6 @@ storiesOf('TextInput', module)
   ))
   .add('Number input', () => (
     <TextInput
-      size="small"
       label="Label"
       placeholder="Type something"
       type="number"
@@ -123,7 +128,6 @@ storiesOf('TextInput', module)
   ))
   .add('Password input', () => (
     <TextInput
-      size="small"
       label="Label"
       placeholder="Type something"
       type="password"
@@ -155,15 +159,6 @@ storiesOf('TextInput', module)
       maxLength={5}
     />
   ))
-  .add('Input with min length', () => (
-    <TextInput
-      size="small"
-      label="Label"
-      placeholder="Type something"
-      onChangeText={action('change')}
-      minLength={3}
-    />
-  ))
   .add('Required field', () => (
     <TextInput
       label="Label"
@@ -187,20 +182,33 @@ storiesOf('TextInput', module)
       prefix={<Icon name="search" />}
       onChangeText={action('change')}
     />
-  ))
-  .add('Compact input', () => (
-    <TextInput
-      label="Label"
-      inlineLabel
-      placeholder="Type something"
-      onChangeText={action('change')}
-    />
-  ))
-  .add('With service logo suffix', () => (
-    <TextInput
-      label="Label"
-      placeholder="Type something"
-      suffix={<ServiceLogo name="VisaHQ" />}
-      onChangeText={action('change')}
-    />
   ));
+
+if (Platform.OS === 'web') {
+  stories
+    .add('Input with min length', () => (
+      <TextInput
+        size="small"
+        label="Label"
+        placeholder="Type something"
+        onChangeText={action('change')}
+        minLength={3}
+      />
+    ))
+    .add('Compact input', () => (
+      <TextInput
+        label="Label"
+        inlineLabel
+        placeholder="Type something"
+        onChangeText={action('change')}
+      />
+    ))
+    .add('With service logo suffix', () => (
+      <TextInput
+        label="Label"
+        placeholder="Type something"
+        suffix={<ServiceLogo name="VisaHQ" />}
+        onChangeText={action('change')}
+      />
+    ));
+}
