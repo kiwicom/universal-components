@@ -6,6 +6,8 @@ export { default as Button } from './Button';
 export { default as Icon } from './Icon';
 export { default as TextInput } from './TextInput';
 export { default as ServiceLogo } from './ServiceLogo/component';
+export { Loader } from './Loader';
+export { PageLoader } from './Loader';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';
