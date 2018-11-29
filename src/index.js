@@ -3,10 +3,11 @@
 /* Components */
 export { default as Text } from './Text';
 export { default as Button } from './Button';
-export { default as Icon } from './Icon';
-export { default as TextInput } from './TextInput';
-export { default as ServiceLogo } from './ServiceLogo/component';
 export { Badge } from './Badge';
+export { Icon } from './Icon';
+export { TextInput } from './TextInput';
+export { ServiceLogo } from './ServiceLogo';
+export { FilterButton } from './FilterButton';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';
