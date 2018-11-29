@@ -1,3 +1,4 @@
+// @flow
 
 // Auto-generated file created by react-native-storybook-loader
 // Do not edit.
@@ -14,7 +15,6 @@ function loadStories() {
   require('../src/ServiceLogo/ServiceLogo.stories');
   require('../src/Text/Text.stories');
   require('../src/TextInput/TextInput.stories');
-  
 }
 
 const stories = [
@@ -27,7 +27,6 @@ const stories = [
   '../src/ServiceLogo/ServiceLogo.stories',
   '../src/Text/Text.stories',
   '../src/TextInput/TextInput.stories',
-  
 ];
 
 module.exports = {
