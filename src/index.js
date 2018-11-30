@@ -2,14 +2,15 @@
 
 /* Components */
 export { default as Text } from './Text';
-export { default as Button } from './Button';
 export { Loader } from './Loader';
 export { PageLoader } from './Loader';
+export { Button } from './Button';
 export { Badge } from './Badge';
 export { Icon } from './Icon';
 export { TextInput } from './TextInput';
 export { ServiceLogo } from './ServiceLogo';
 export { FilterButton } from './FilterButton';
+export { Stepper } from './Stepper';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';
