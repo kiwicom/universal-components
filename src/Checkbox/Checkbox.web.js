@@ -21,14 +21,14 @@ export default function Checkbox({
   info,
   onChange,
 }: CheckboxProps) {
-  const styleLabel = {
+  const labelStyle = {
     display: 'flex',
     flexDirection: 'row',
     cursor: disabled ? 'default' : 'pointer',
   };
 
   return (
-    <label style={styleLabel}>
+    <label style={labelStyle}>
       <input
         value={value}
         type="checkbox"

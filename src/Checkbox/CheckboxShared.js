@@ -17,7 +17,7 @@ class CheckboxShared extends React.Component<
     super(props);
 
     this.state = {
-      showFocus: false,
+      focusDisplayed: false,
       hovered: false,
       pressed: false,
     };
@@ -36,20 +36,20 @@ class CheckboxShared extends React.Component<
   };
 
   handleOnPressOut = () => {
-    this.setState({ pressed: false, showFocus: false });
+    this.setState({ pressed: false, focusDisplayed: false });
   };
 
   handleOnFocus = () => {
-    this.setState({ showFocus: true });
+    this.setState({ focusDisplayed: true });
   };
 
   handleOnBlur = () => {
-    this.setState({ showFocus: false });
+    this.setState({ focusDisplayed: false });
   };
 
   render() {
     const { label, hasError, disabled, checked, info, onPress } = this.props;
-    const { showFocus, hovered, pressed } = this.state;
+    const { focusDisplayed, hovered, pressed } = this.state;
 
     return (
       <Hoverable
@@ -70,7 +70,7 @@ class CheckboxShared extends React.Component<
               checked={checked}
               hasError={hasError}
               disabled={disabled}
-              focused={showFocus}
+              focused={focusDisplayed}
               hovered={hovered}
               pressed={pressed}
             />

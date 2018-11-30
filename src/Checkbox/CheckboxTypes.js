@@ -23,7 +23,7 @@ export type CheckboxSharedProps = {|
 |};
 
 export type CheckboxSharedState = {|
-  showFocus: boolean,
+  focusDisplayed: boolean,
   hovered: boolean,
   pressed: boolean,
 |};
