@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { render, fireEvent } from 'react-native-testing-library';
 import snapshotDiff from 'snapshot-diff';
-import TextInput from '..';
+import { TextInput } from '..';
 import ServiceLogo from '../../ServiceLogo/component';
 
 describe('TextInput', () => {
@@ -29,7 +29,7 @@ describe('TextInput', () => {
   );
 
   it('should contain an input', () => {
-    expect(getByType('TextInput')).toBeDefined();
+    expect(getByType(TextInput)).toBeDefined();
   });
 
   it('should contain a label', () => {
@@ -48,11 +48,11 @@ describe('TextInput', () => {
   });
 
   it('should execute onChangeText method', () => {
-    fireEvent.changeText(getByType('TextInput'), 'content');
+    fireEvent.changeText(getByType(TextInput), 'content');
   });
 
   it('should execute onFocus method', () => {
-    fireEvent(getByType('TextInput'), 'focus');
+    fireEvent(getByType(TextInput), 'focus');
   });
 
   it('should match snapshot diff between small and normal input', () => {

@@ -4,20 +4,7 @@
 
 import * as React from 'react';
 import CheckboxShared from './CheckboxShared';
-import theme from './styles';
-
-type Props = {|
-  +label?: React.Node,
-  +value?: string,
-  +hasError?: boolean,
-  +disabled?: boolean,
-  +checked?: boolean,
-  +name?: string,
-  +info?: React.Node,
-  +onChange?: (
-    ev: SyntheticInputEvent<HTMLInputElement>
-  ) => void | Promise<any>,
-|};
+import type { CheckboxProps } from './CheckboxTypes';
 
 const styleInput = {
   display: 'none',
@@ -33,16 +20,15 @@ export default function Checkbox({
   name,
   info,
   onChange,
-}: Props) {
-  const labelStyle = {
+}: CheckboxProps) {
+  const styleLabel = {
     display: 'flex',
     flexDirection: 'row',
     cursor: disabled ? 'default' : 'pointer',
-    opacity: disabled ? theme.orbit.opacityCheckboxDisabled : 1,
   };
 
   return (
-    <label style={labelStyle}>
+    <label style={styleLabel}>
       <input
         value={value}
         type="checkbox"
