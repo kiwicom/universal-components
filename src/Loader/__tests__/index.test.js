@@ -7,6 +7,10 @@ import snapshotDiff from 'snapshot-diff';
 
 import { Loader, PageLoader } from '../index';
 
+jest.mock('Platform', () => ({
+  select: jest.fn(),
+}));
+
 describe('Loader', () => {
   it('should match snapshot diff between small and large loader', () => {
     const small = render(<Loader size="small" />);
@@ -17,17 +21,19 @@ describe('Loader', () => {
 });
 
 describe('Page Loader', () => {
-  const { getByType } = render(<PageLoader />);
-
   it('should have large page loader for Android', () => {
-    if (Platform.OS === 'android') {
-      expect(getByType(Loader).props.size).toBe('large');
-    }
+    // $FlowFixMe
+    Platform.select.mockImplementationOnce(obj => obj.android);
+    const { getByType } = render(<PageLoader />);
+
+    expect(getByType(Loader).props.size).toBe('large');
   });
 
   it('should have small page loader for iOS', () => {
-    if (Platform.OS === 'android') {
-      expect(getByType(Loader).props.size).toBe('small');
-    }
+    // $FlowFixMe
+    Platform.select.mockImplementationOnce(obj => obj.ios);
+    const { getByType } = render(<PageLoader />);
+
+    expect(getByType(Loader).props.size).toBe('small');
   });
 });
