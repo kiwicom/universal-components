@@ -32,7 +32,8 @@
   "author": "kiwi.com",
   "license": "MIT",
   "dependencies": {
-    "@kiwicom/orbit-design-tokens": "^0.2.5"
+    "@kiwicom/orbit-design-tokens": "^0.2.5",
+    "@ptomasroos/react-native-multi-slider": "^1.0.0"
   },
   "peerDependencies": {
     "react": "16.6.1",
