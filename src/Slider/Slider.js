@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import { View } from 'react-native';
-// import { type OnLayout } from '@kiwicom/mobile-shared';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 
 import StyleSheet from '../PlatformStyleSheet';
+import type { StylePropType } from '../PlatformStyleSheet/StyleTypes';
 
 type Props = {|
   +onChange: (number[]) => void,
@@ -14,14 +14,24 @@ type Props = {|
   +max: number,
   +startValue: number,
   +endValue?: number,
-  +step?: number,
   +snapped?: boolean,
-  +style?: Object,
+  +style?: StylePropType,
 |};
 
 type State = {|
   width: number,
 |};
+
+type OnLayout = {
+  +nativeEvent: {
+    +layout: {
+      +x: number,
+      +y: number,
+      +width: number,
+      +height: number,
+    },
+  },
+};
 
 export default class Slider extends React.Component<Props, State> {
   state = {
@@ -33,13 +43,9 @@ export default class Slider extends React.Component<Props, State> {
   };
 
   getMaxMinAndEnabled = () => {
-    const { max, min } = this.props;
+    const { max, min, startValue, endValue } = this.props;
 
-    if (
-      max === min &&
-      max === this.props.startValue &&
-      max === this.props.endValue
-    ) {
+    if (max === min && max === startValue && max === endValue) {
       // If all values are equal, expand max and min values by one
       // to make dot appear on the center and disable sliding.
       return {
@@ -59,11 +65,14 @@ export default class Slider extends React.Component<Props, State> {
   };
 
   render() {
-    const { max, min, enabledOne, enabledTwo } = this.getMaxMinAndEnabled();
-    const values = [this.props.startValue];
+    const { startValue, endValue, snapped, style, onChange } = this.props;
+    const { width } = this.state;
 
-    if (this.props.endValue) {
-      values.push(this.props.endValue);
+    const { max, min, enabledOne, enabledTwo } = this.getMaxMinAndEnabled();
+    const values = [startValue];
+
+    if (endValue) {
+      values.push(endValue);
     }
 
     return (
@@ -72,10 +81,10 @@ export default class Slider extends React.Component<Props, State> {
           values={values}
           min={min}
           max={max}
-          snapped={this.props.snapped}
+          snapped={snapped}
           allowOverlap
           selectedStyle={styles.selected}
-          sliderLength={this.state.width}
+          sliderLength={width}
           touchDimensions={{
             height: 30,
             width: 30,
@@ -86,8 +95,8 @@ export default class Slider extends React.Component<Props, State> {
           trackStyle={styles.track}
           markerStyle={styles.marker}
           pressedMarkerStyle={styles.marker}
-          containerStyle={[styles.container, this.props.style]}
-          onValuesChange={this.props.onChange}
+          containerStyle={[styles.container, style]}
+          onValuesChange={onChange}
           enabledOne={enabledOne}
           enabledTwo={enabledTwo}
         />

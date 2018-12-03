@@ -3,16 +3,16 @@
 import * as React from 'react';
 import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 import { View } from 'react-native';
-// import type { OnLayout } from '@kiwicom/mobile-shared';
-// import { type TranslationType } from '@kiwicom/mobile-localization';
 
 import Text from '../Text';
 import StyleSheet from '../PlatformStyleSheet';
 
+import { type OnLayout } from './SliderTypes';
+
 type Props = {|
-  +startLabel: any,
+  +startLabel?: React.Node,
   +startValue: number,
-  +endLabel?: any,
+  +endLabel?: React.Node,
   +endValue?: number,
   +max: number,
   +min: number,
@@ -41,22 +41,21 @@ export default class SliderLabels extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (this.props.endValue) {
+    const { endValue } = this.props;
+    if (endValue) {
       requestAnimationFrame(this.setPaddingForTwoLabels);
     } else {
       requestAnimationFrame(this.setPaddingForOneLabel);
     }
   }
 
-  getMaxPadding = (gap: number): number =>
-    Math.floor(
-      this.state.width -
-        this.state.labelStartWidth -
-        this.state.labelEndWidth -
-        gap
-    );
+  getMaxPadding = (gap: number): number => {
+    const { width, labelStartWidth, labelEndWidth } = this.state;
+    return Math.floor(width - labelStartWidth - labelEndWidth - gap);
+  };
 
   calculateMarkerStartOffset = (): number => {
+    const { width } = this.state;
     const { min, max, startValue } = this.props;
 
     let val;
@@ -68,10 +67,11 @@ export default class SliderLabels extends React.Component<Props, State> {
       val = startValue;
     }
 
-    return Math.round((val / (max - min)) * this.state.width);
+    return Math.round((val / (max - min)) * width);
   };
 
   calculateMarkerEndOffset = (): number => {
+    const { width } = this.state;
     const { min, max, endValue } = this.props;
 
     if (!endValue) {
@@ -87,13 +87,14 @@ export default class SliderLabels extends React.Component<Props, State> {
       val = endValue;
     }
 
-    const w = (val / (max - min)) * this.state.width;
-    return Math.round(this.state.width - w);
+    const w = (val / (max - min)) * width;
+    return Math.round(width - w);
   };
 
   getStartLabelOffset = (): number => {
+    const { labelStartWidth } = this.state;
     const startMarkerOffset = this.calculateMarkerStartOffset();
-    const startLabelHalf = this.state.labelStartWidth / 2;
+    const startLabelHalf = labelStartWidth / 2;
 
     return startMarkerOffset < startLabelHalf
       ? 0
@@ -106,9 +107,10 @@ export default class SliderLabels extends React.Component<Props, State> {
   };
 
   setPaddingForTwoLabels = (): void => {
+    const { labelEndWidth, paddingLeft, paddingRight } = this.state;
     const startLabelOffset = this.getStartLabelOffset();
     const endMarkerOffset = this.calculateMarkerEndOffset();
-    const endLabelHalf = this.state.labelEndWidth / 2;
+    const endLabelHalf = labelEndWidth / 2;
     const endLabelOffset =
       endMarkerOffset < endLabelHalf ? 0 : endMarkerOffset - endLabelHalf;
 
@@ -118,8 +120,7 @@ export default class SliderLabels extends React.Component<Props, State> {
     );
 
     const hasOffsetChanged =
-      this.state.paddingLeft !== startLabelOffset ||
-      this.state.paddingRight !== endLabelOffset;
+      paddingLeft !== startLabelOffset || paddingRight !== endLabelOffset;
 
     if (isBelowMaxPadding && hasOffsetChanged) {
       this.setState({
@@ -132,9 +133,10 @@ export default class SliderLabels extends React.Component<Props, State> {
   };
 
   setPaddingForOneLabel = (): void => {
+    const { paddingLeft, labelStartAtMax } = this.state;
     const startLabelOffset = this.getStartLabelOffset();
     const isBelowMaxPadding = this.isBelowMaxPadding(startLabelOffset);
-    const hasOffsetChanged = this.state.paddingLeft !== startLabelOffset;
+    const hasOffsetChanged = paddingLeft !== startLabelOffset;
 
     if (isBelowMaxPadding) {
       if (hasOffsetChanged) {
@@ -143,10 +145,10 @@ export default class SliderLabels extends React.Component<Props, State> {
         });
       }
 
-      if (this.state.labelStartAtMax) {
+      if (labelStartAtMax) {
         this.setState({ labelStartAtMax: false });
       }
-    } else if (this.state.labelStartAtMax === false) {
+    } else if (labelStartAtMax === false) {
       this.setState({ labelStartAtMax: true });
     }
 
@@ -166,26 +168,26 @@ export default class SliderLabels extends React.Component<Props, State> {
   };
 
   render() {
+    const { paddingLeft, paddingRight, labelStartAtMax } = this.state;
+    const { startLabel, startValue, endLabel, endValue } = this.props;
     return (
       <View
         style={[
           styles.sliderLabels,
           {
-            paddingLeft: this.state.paddingLeft,
-            paddingRight: this.state.paddingRight,
-            justifyContent: this.state.labelStartAtMax
-              ? 'flex-end'
-              : 'space-between',
+            paddingLeft,
+            paddingRight,
+            justifyContent: labelStartAtMax ? 'flex-end' : 'space-between',
           },
         ]}
         onLayout={this.saveFullWidth}
       >
         <View onLayout={this.saveLabelStartWidth}>
-          <Text style={styles.label}>{this.props.startLabel}</Text>
+          <Text style={styles.label}>{startLabel || startValue}</Text>
         </View>
-        {this.props.endLabel && (
+        {endValue && (
           <View onLayout={this.saveLabelEndWidth}>
-            <Text style={styles.label}>{this.props.endLabel}</Text>
+            <Text style={styles.label}>{endLabel || endValue}</Text>
           </View>
         )}
       </View>

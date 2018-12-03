@@ -1,0 +1,12 @@
+// @flow
+
+export type OnLayout = {
+  +nativeEvent: {
+    +layout: {
+      +x: number,
+      +y: number,
+      +width: number,
+      +height: number,
+    },
+  },
+};

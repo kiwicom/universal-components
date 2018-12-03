@@ -4,7 +4,6 @@ import * as React from 'react';
 import { View } from 'react-native';
 import Slider from './Slider';
 import SliderLabels from './SliderLabels';
-import Text from '../Text';
 import StyleSheet from '../PlatformStyleSheet';
 
 type Props = {|
@@ -12,8 +11,8 @@ type Props = {|
   max: number,
   start: number,
   end: number,
-  startLabel: React.Node,
-  endLabel: React.Node,
+  startLabel?: React.Node,
+  endLabel?: React.Node,
 |};
 
 type State = {|
@@ -41,7 +40,7 @@ export default class CompactSlider extends React.Component<Props, State> {
 
   render() {
     const { start, end } = this.state;
-    const { min, max, startLabel, endLabel } = this.props;
+    const { min, max, startLabel, endLabel, step } = this.props;
 
     return (
       <View>
