@@ -7,12 +7,13 @@ import SliderLabels from './SliderLabels';
 import StyleSheet from '../PlatformStyleSheet';
 
 type Props = {|
-  min: number,
-  max: number,
-  start: number,
-  end: number,
-  startLabel?: React.Node,
-  endLabel?: React.Node,
+  +min: number,
+  +max: number,
+  +start: number,
+  +end: number,
+  +startLabel?: React.Node,
+  +endLabel?: React.Node,
+  +snapped?: boolean,
 |};
 
 type State = {|
@@ -40,7 +41,7 @@ export default class CompactSlider extends React.Component<Props, State> {
 
   render() {
     const { start, end } = this.state;
-    const { min, max, startLabel, endLabel } = this.props;
+    const { min, max, startLabel, endLabel, snapped } = this.props;
 
     return (
       <View>
@@ -59,6 +60,7 @@ export default class CompactSlider extends React.Component<Props, State> {
             min={min}
             max={max}
             onChange={this.handlePriceChanged}
+            snapped={snapped}
           />
         </View>
       </View>
