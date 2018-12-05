@@ -7,4 +7,6 @@ import CompactSlider from './CompactSlider';
 
 storiesOf('Slider', module)
   .addDecorator(withKnobs)
-  .add('Default', () => <CompactSlider min={0} max={10} start={3} end={9} />);
+  .add('Default', () => (
+    <CompactSlider min={0} max={100000} start={60000} end={90000} />
+  ));

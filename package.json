@@ -16,7 +16,8 @@
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack"
+    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack",
+    "prepare": "patch-package"
   },
   "files": [
     "/lib",
@@ -62,6 +63,8 @@
     "flow-bin": "0.78.0",
     "jest": "^23.6.0",
     "metro-react-native-babel-preset": "^0.49.1",
+    "patch-package": "^5.1.1",
+    "postinstall-prepare": "^1.0.1",
     "prettier": "^1.15.2",
     "prettier-eslint-cli": "^4.7.1",
     "react": "16.6.1",

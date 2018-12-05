@@ -16,6 +16,8 @@ type Props = {|
   +endValue?: number,
   +snapped?: boolean,
   +style?: StylePropType,
+  +startLabel?: React.Node,
+  +endLabel?: React.Node,
 |};
 
 type State = {|
@@ -65,7 +67,15 @@ export default class Slider extends React.Component<Props, State> {
   };
 
   render() {
-    const { startValue, endValue, snapped, style, onChange } = this.props;
+    const {
+      startValue,
+      endValue,
+      snapped,
+      style,
+      onChange,
+      startLabel,
+      endLabel,
+    } = this.props;
     const { width } = this.state;
 
     const { max, min, enabledOne, enabledTwo } = this.getMaxMinAndEnabled();
@@ -99,6 +109,8 @@ export default class Slider extends React.Component<Props, State> {
           onValuesChange={onChange}
           enabledOne={enabledOne}
           enabledTwo={enabledTwo}
+          startLabel={startLabel}
+          endLabel={endLabel}
         />
       </View>
     );

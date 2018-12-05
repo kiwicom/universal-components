@@ -2,17 +2,17 @@
 
 import * as React from 'react';
 import { View } from 'react-native';
+
 import Slider from './Slider';
-import SliderLabels from './SliderLabels';
 import StyleSheet from '../PlatformStyleSheet';
 
 type Props = {|
-  min: number,
-  max: number,
-  start: number,
-  end: number,
-  startLabel?: React.Node,
-  endLabel?: React.Node,
+  +min: number,
+  +max: number,
+  +start: number,
+  +end: number,
+  +startLabel?: React.Node,
+  +endLabel?: React.Node,
 |};
 
 type State = {|
@@ -44,14 +44,6 @@ export default class CompactSlider extends React.Component<Props, State> {
 
     return (
       <View>
-        <SliderLabels
-          max={max}
-          min={min}
-          startLabel={startLabel}
-          startValue={start}
-          endLabel={endLabel}
-          endValue={end}
-        />
         <View style={styles.sliderContainer}>
           <Slider
             startValue={start}
@@ -59,6 +51,8 @@ export default class CompactSlider extends React.Component<Props, State> {
             min={min}
             max={max}
             onChange={this.handlePriceChanged}
+            startLabel={startLabel}
+            endLabel={endLabel}
           />
         </View>
       </View>
@@ -68,6 +62,6 @@ export default class CompactSlider extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
   sliderContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
 });
