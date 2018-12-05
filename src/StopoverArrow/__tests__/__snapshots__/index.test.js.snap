@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StopoverArrow should match the snapshot 1`] = `
+<View>
+  <Svg
+    fill="none"
+    height="9"
+    viewBox="0 0 53 9"
+    width="53"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <React.Fragment>
+      <Rect
+        fill="#7f91a8"
+        height="1"
+        width="49"
+        x="2"
+        y="4.00024"
+      />
+      <Rect
+        fill="#7f91a8"
+        height="5"
+        transform="rotate(45 51.3281 3.79321)"
+        width="1"
+        x="51.3281"
+        y="3.79321"
+      />
+      <Rect
+        fill="#7f91a8"
+        height="1"
+        transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 52.0354 4.50049)"
+        width="5"
+      />
+    </React.Fragment>
+    <Rect
+      fill="#e8edf1"
+      height="4"
+      stroke="#7f91a8"
+      width="4"
+      x={14}
+      y="3"
+    />
+    <Rect
+      fill="#e8edf1"
+      height="4"
+      stroke="#7f91a8"
+      width="4"
+      x={22}
+      y="3"
+    />
+    <Rect
+      fill="#e8edf1"
+      height="4"
+      stroke="#7f91a8"
+      width="4"
+      x={30}
+      y="3"
+    />
+  </Svg>
+</View>
+`;
