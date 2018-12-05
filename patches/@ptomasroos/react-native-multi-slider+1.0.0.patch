@@ -1,13 +1,7 @@
 patch-package
 --- a/node_modules/@ptomasroos/react-native-multi-slider/MultiSlider.js
 +++ b/node_modules/@ptomasroos/react-native-multi-slider/MultiSlider.js
-@@ -1,3 +1,5 @@
-+// @flow
-+
- import React from 'react';
- import PropTypes from 'prop-types';
- 
-@@ -7,7 +9,8 @@ import {
+@@ -7,7 +7,8 @@ import {
    View,
    TouchableHighlight,
    Platform,
@@ -17,7 +11,7 @@ patch-package
  } from 'react-native';
  
  import DefaultMarker from './DefaultMarker';
-@@ -59,12 +62,9 @@ export default class MultiSlider extends React.Component {
+@@ -59,12 +60,9 @@ export default class MultiSlider extends React.Component {
  
    static defaultProps = {
      values: [0],
@@ -33,7 +27,7 @@ patch-package
      step: 1,
      min: 0,
      max: 10,
-@@ -93,12 +93,14 @@ export default class MultiSlider extends React.Component {
+@@ -93,12 +91,14 @@ export default class MultiSlider extends React.Component {
    constructor(props) {
      super(props);
  
@@ -51,7 +45,7 @@ patch-package
  
      this.state = {
        pressedOne: true,
-@@ -108,12 +110,14 @@ export default class MultiSlider extends React.Component {
+@@ -108,12 +108,14 @@ export default class MultiSlider extends React.Component {
        pastTwo: initialValues[1],
        positionOne: initialValues[0],
        positionTwo: initialValues[1],
@@ -68,7 +62,7 @@ patch-package
          onStartShouldSetPanResponder: (evt, gestureState) => true,
          onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
          onMoveShouldSetPanResponder: (evt, gestureState) => true,
-@@ -125,17 +129,16 @@ export default class MultiSlider extends React.Component {
+@@ -125,17 +127,16 @@ export default class MultiSlider extends React.Component {
          onPanResponderTerminate: (evt, gestureState) => end(gestureState),
          onShouldBlockNativeResponder: (evt, gestureState) => true,
        });
@@ -88,7 +82,7 @@ patch-package
      );
    }
  
-@@ -144,33 +147,35 @@ export default class MultiSlider extends React.Component {
+@@ -144,33 +145,35 @@ export default class MultiSlider extends React.Component {
        return;
      }
  
@@ -137,7 +131,7 @@ patch-package
        );
        nextState.valueTwo = nextProps.values[1];
        nextState.pastTwo = positionTwo;
-@@ -204,25 +209,27 @@ export default class MultiSlider extends React.Component {
+@@ -204,25 +207,27 @@ export default class MultiSlider extends React.Component {
      if (!this.props.enabledOne) {
        return;
      }
@@ -177,7 +171,7 @@ patch-package
        );
        this.setState({
          positionOne: this.props.snapped ? snapped : confined,
-@@ -234,12 +241,12 @@ export default class MultiSlider extends React.Component {
+@@ -234,12 +239,12 @@ export default class MultiSlider extends React.Component {
              valueOne: value,
            },
            () => {
@@ -192,7 +186,7 @@ patch-package
          );
        }
      }
-@@ -249,24 +256,26 @@ export default class MultiSlider extends React.Component {
+@@ -249,24 +254,26 @@ export default class MultiSlider extends React.Component {
      if (!this.props.enabledTwo) {
        return;
      }
@@ -230,7 +224,7 @@ patch-package
        );
  
        this.setState({
-@@ -279,8 +288,11 @@ export default class MultiSlider extends React.Component {
+@@ -279,8 +286,11 @@ export default class MultiSlider extends React.Component {
              valueTwo: value,
            },
            () => {
@@ -244,7 +238,7 @@ patch-package
          );
        }
      }
-@@ -298,12 +310,12 @@ export default class MultiSlider extends React.Component {
+@@ -298,12 +308,12 @@ export default class MultiSlider extends React.Component {
          onePressed: !this.state.onePressed,
        },
        () => {
@@ -259,7 +253,7 @@ patch-package
      );
    };
  
-@@ -323,14 +335,107 @@ export default class MultiSlider extends React.Component {
+@@ -323,14 +333,107 @@ export default class MultiSlider extends React.Component {
            this.state.valueOne,
            this.state.valueTwo,
          ]);
@@ -370,7 +364,7 @@ patch-package
  
      const trackOneLength = positionOne;
      const trackOneStyle = twoMarkers
-@@ -358,9 +463,15 @@ export default class MultiSlider extends React.Component {
+@@ -358,9 +461,15 @@ export default class MultiSlider extends React.Component {
        borderRadius: borderRadius || 0,
      };
  
@@ -388,7 +382,7 @@ patch-package
  
      return (
        <View style={[styles.container, this.props.containerStyle]}>
-@@ -381,15 +492,62 @@ export default class MultiSlider extends React.Component {
+@@ -381,15 +490,62 @@ export default class MultiSlider extends React.Component {
                { width: trackTwoLength },
              ]}
            />
@@ -459,7 +453,7 @@ patch-package
            <View
              style={[
                styles.markerContainer,
-@@ -399,12 +557,18 @@ export default class MultiSlider extends React.Component {
+@@ -399,12 +555,18 @@ export default class MultiSlider extends React.Component {
              ]}
            >
              <View
@@ -483,7 +477,7 @@ patch-package
                      enabled={this.props.enabledOne}
                      pressed={this.state.onePressed}
                      markerStyle={[styles.marker, this.props.markerStyle]}
-@@ -412,9 +576,9 @@ export default class MultiSlider extends React.Component {
+@@ -412,9 +574,9 @@ export default class MultiSlider extends React.Component {
                      currentValue={this.state.valueOne}
                      valuePrefix={this.props.valuePrefix}
                      valueSuffix={this.props.valueSuffix}
@@ -496,7 +490,7 @@ patch-package
                      enabled={this.props.enabledOne}
                      pressed={this.state.onePressed}
                      markerStyle={[styles.marker, this.props.markerStyle]}
-@@ -422,42 +586,57 @@ export default class MultiSlider extends React.Component {
+@@ -422,42 +584,57 @@ export default class MultiSlider extends React.Component {
                      currentValue={this.state.valueOne}
                      valuePrefix={this.props.valuePrefix}
                      valueSuffix={this.props.valueSuffix}
@@ -587,7 +581,7 @@ patch-package
          </View>
        </View>
      );
-@@ -468,7 +647,7 @@ const styles = StyleSheet.create({
+@@ -468,7 +645,7 @@ const styles = StyleSheet.create({
    container: {
      position: 'relative',
      height: 50,
