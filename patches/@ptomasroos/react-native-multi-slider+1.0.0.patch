@@ -177,12 +177,7 @@ patch-package
        );
        this.setState({
          positionOne: this.props.snapped ? snapped : confined,
-@@ -231,15 +238,17 @@ export default class MultiSlider extends React.Component {
-       if (value !== this.state.valueOne) {
-         this.setState(
-           {
-+            activeOne: true,
-+            activeTwo: false,
+@@ -234,12 +241,12 @@ export default class MultiSlider extends React.Component {
              valueOne: value,
            },
            () => {
@@ -197,7 +192,7 @@ patch-package
          );
        }
      }
-@@ -249,24 +258,26 @@ export default class MultiSlider extends React.Component {
+@@ -249,24 +256,26 @@ export default class MultiSlider extends React.Component {
      if (!this.props.enabledTwo) {
        return;
      }
@@ -235,12 +230,7 @@ patch-package
        );
  
        this.setState({
-@@ -276,11 +287,16 @@ export default class MultiSlider extends React.Component {
-       if (value !== this.state.valueTwo) {
-         this.setState(
-           {
-+            activeTwo: true,
-+            activeOne: false,
+@@ -279,8 +288,11 @@ export default class MultiSlider extends React.Component {
              valueTwo: value,
            },
            () => {
@@ -254,17 +244,7 @@ patch-package
          );
        }
      }
-@@ -292,18 +308,22 @@ export default class MultiSlider extends React.Component {
-       return;
-     }
- 
-+    const lastOnePosition =
-+      Math.min(this.state.positionTwo - this.state.positionOne, 50) - 50;
-+
-     this.setState(
-       {
-+        lastOnePosition,
-         pastOne: this.state.positionOne,
+@@ -298,12 +310,12 @@ export default class MultiSlider extends React.Component {
          onePressed: !this.state.onePressed,
        },
        () => {
@@ -279,20 +259,7 @@ patch-package
      );
    };
  
-@@ -313,8 +333,12 @@ export default class MultiSlider extends React.Component {
-       return;
-     }
- 
-+    const lastTwoPosition =
-+      Math.min(this.state.positionOne - this.state.positionTwo, 50) + 50;
-+
-     this.setState(
-       {
-+        lastTwoPosition,
-         twoPressed: !this.state.twoPressed,
-         pastTwo: this.state.positionTwo,
-       },
-@@ -323,14 +347,107 @@ export default class MultiSlider extends React.Component {
+@@ -323,14 +335,107 @@ export default class MultiSlider extends React.Component {
            this.state.valueOne,
            this.state.valueTwo,
          ]);
@@ -403,7 +370,7 @@ patch-package
  
      const trackOneLength = positionOne;
      const trackOneStyle = twoMarkers
-@@ -358,9 +475,15 @@ export default class MultiSlider extends React.Component {
+@@ -358,9 +463,15 @@ export default class MultiSlider extends React.Component {
        borderRadius: borderRadius || 0,
      };
  
@@ -421,7 +388,7 @@ patch-package
  
      return (
        <View style={[styles.container, this.props.containerStyle]}>
-@@ -381,15 +504,60 @@ export default class MultiSlider extends React.Component {
+@@ -381,15 +492,62 @@ export default class MultiSlider extends React.Component {
                { width: trackTwoLength },
              ]}
            />
@@ -465,32 +432,34 @@ patch-package
 +              {this.state.startLabel || this.state.valueOne}
 +            </Text>
 +          </View>
-+          <View
-+            style={{
-+              bottom: 18,
-+              position: 'absolute',
-+              transform: [
-+                {
-+                  translateX: this.getTranslateTwo(),
-+                },
-+              ],
-+            }}
-+            onLayout={this.saveLabelEndWidth}
-+          >
-+            <Text
++          {this.state.valueTwo !== undefined && (
++            <View
 +              style={{
-+                textAlign: 'center',
-+                fontSize: 14,
-+                color: '#0176D2',
++                bottom: 18,
++                position: 'absolute',
++                transform: [
++                  {
++                    translateX: this.getTranslateTwo(),
++                  },
++                ],
 +              }}
++              onLayout={this.saveLabelEndWidth}
 +            >
-+              {this.props.endLabel || this.state.valueTwo}
-+            </Text>
-+          </View>
++              <Text
++                style={{
++                  textAlign: 'center',
++                  fontSize: 14,
++                  color: '#0176D2',
++                }}
++              >
++                {this.props.endLabel || this.state.valueTwo}
++              </Text>
++            </View>
++          )}
            <View
              style={[
                styles.markerContainer,
-@@ -399,12 +567,18 @@ export default class MultiSlider extends React.Component {
+@@ -399,12 +557,18 @@ export default class MultiSlider extends React.Component {
              ]}
            >
              <View
@@ -514,7 +483,7 @@ patch-package
                      enabled={this.props.enabledOne}
                      pressed={this.state.onePressed}
                      markerStyle={[styles.marker, this.props.markerStyle]}
-@@ -412,9 +586,9 @@ export default class MultiSlider extends React.Component {
+@@ -412,9 +576,9 @@ export default class MultiSlider extends React.Component {
                      currentValue={this.state.valueOne}
                      valuePrefix={this.props.valuePrefix}
                      valueSuffix={this.props.valueSuffix}
@@ -527,7 +496,7 @@ patch-package
                      enabled={this.props.enabledOne}
                      pressed={this.state.onePressed}
                      markerStyle={[styles.marker, this.props.markerStyle]}
-@@ -422,42 +596,57 @@ export default class MultiSlider extends React.Component {
+@@ -422,42 +586,57 @@ export default class MultiSlider extends React.Component {
                      currentValue={this.state.valueOne}
                      valuePrefix={this.props.valuePrefix}
                      valueSuffix={this.props.valueSuffix}
@@ -618,7 +587,7 @@ patch-package
          </View>
        </View>
      );
-@@ -468,7 +657,7 @@ const styles = StyleSheet.create({
+@@ -468,7 +647,7 @@ const styles = StyleSheet.create({
    container: {
      position: 'relative',
      height: 50,

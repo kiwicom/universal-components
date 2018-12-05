@@ -86,7 +86,7 @@ export default class Slider extends React.Component<Props, State> {
     }
 
     return (
-      <View onLayout={this.onLayout} style={styles.sliderWrapper}>
+      <View onLayout={this.onLayout} style={styles.sliderContainer}>
         <MultiSlider
           values={values}
           min={min}
@@ -118,6 +118,10 @@ export default class Slider extends React.Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
+  sliderContainer: {
+    alignSelf: 'center',
+    width: '85%',
+  },
   selected: {
     backgroundColor: defaultTokens.paletteBlueNormal,
   },
