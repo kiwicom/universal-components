@@ -1,4 +1,3 @@
-// @flow
 
 // Auto-generated file created by react-native-storybook-loader
 // Do not edit.
@@ -6,7 +5,6 @@
 // https://github.com/elderfo/react-native-storybook-loader.git
 
 function loadStories() {
-  require('../src/Slider/Slider.stories');
   require('../src/Badge/Badge.stories');
   require('../src/Button/Button.stories');
   require('../src/Card/Card.stories');
@@ -17,13 +15,14 @@ function loadStories() {
   require('../src/RadioButton/RadioButton.stories');
   require('../src/Rating/Rating.stories');
   require('../src/ServiceLogo/ServiceLogo.stories');
+  require('../src/Slider/Slider.stories');
   require('../src/Stepper/Stepper.stories');
   require('../src/Text/Text.stories');
   require('../src/TextInput/TextInput.stories');
+  
 }
 
 const stories = [
-  '../src/Slider/Slider.stories',
   '../src/Badge/Badge.stories',
   '../src/Button/Button.stories',
   '../src/Card/Card.stories',
@@ -34,9 +33,11 @@ const stories = [
   '../src/RadioButton/RadioButton.stories',
   '../src/Rating/Rating.stories',
   '../src/ServiceLogo/ServiceLogo.stories',
+  '../src/Slider/Slider.stories',
   '../src/Stepper/Stepper.stories',
   '../src/Text/Text.stories',
   '../src/TextInput/TextInput.stories',
+  
 ];
 
 module.exports = {

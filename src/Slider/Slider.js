@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { View } from 'react-native';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import MultiSlider from 'react-native-multi-slider';
 import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 
 import StyleSheet from '../PlatformStyleSheet';

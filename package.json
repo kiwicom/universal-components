@@ -16,8 +16,7 @@
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack",
-    "prepare": "patch-package"
+    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack"
   },
   "files": [
     "/lib",
@@ -34,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@kiwicom/orbit-design-tokens": "^0.2.5",
-    "@ptomasroos/react-native-multi-slider": "^1.0.0"
+    "react-native-multi-slider": "https://github.com/lukewalczak/react-native-multi-slider.git#feat/labels"
   },
   "peerDependencies": {
     "react": "16.6.1",
