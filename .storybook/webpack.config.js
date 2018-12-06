@@ -11,10 +11,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
-          path.join(
-            __dirname,
-            '../node_modules/@ptomasroos/react-native-multi-slider'
-          ),
+          path.join(__dirname, '../node_modules/react-native-multi-slider'),
         ],
         use: 'babel-loader',
       },
