@@ -54,11 +54,13 @@ export default class Alert extends React.Component<Props, State> {
     alertMessage: '',
   };
 
+  _lastCallTimestamp = null;
+  _defferedHideAlert = undefined;
+  _hideTimeout: TimeoutID;
+
   componentWillUnmount() {
     clearTimeout(this._hideTimeout);
   }
-
-  _hideTimeout: TimeoutID;
 
   handleLayout = (e: OnLayout) => {
     const { layout } = this.state;
@@ -83,7 +85,7 @@ export default class Alert extends React.Component<Props, State> {
     });
   };
 
-  toggleAlert = (type: AlertType, message: React.Node | string) => {
+  _toggleAlert(type: AlertType, message: React.Node | string) {
     const { isOpen } = this.state;
     if (!isOpen) {
       this.setState({
@@ -95,6 +97,36 @@ export default class Alert extends React.Component<Props, State> {
     } else {
       this.hideAlert();
     }
+  }
+
+  toggleAlert = (type: AlertType, message: React.Node | string) => {
+    const { isOpen } = this.state;
+    const now = Date.now();
+
+    if (
+      !isOpen &&
+      (!this._lastCallTimestamp ||
+        Math.abs(now - this._lastCallTimestamp) >= 200)
+    ) {
+      this._toggleAlert(type, message);
+      this._defferedHideAlert = setTimeout(
+        () => this.hideAlert(),
+        DISPLAY_DURATION
+      );
+    }
+
+    if (
+      this._lastCallTimestamp &&
+      Math.abs(now - this._lastCallTimestamp) < 200
+    ) {
+      clearTimeout(this._defferedHideAlert);
+      this._defferedHideAlert = setTimeout(
+        () => this.hideAlert(),
+        DISPLAY_DURATION
+      );
+    }
+
+    this._lastCallTimestamp = now;
   };
 
   showAlert = () => {
@@ -111,9 +143,7 @@ export default class Alert extends React.Component<Props, State> {
         duration: ANIMATION_DURATION,
         useNativeDriver: true,
       }),
-    ]).start(() => {
-      this._hideTimeout = setTimeout(() => this.hideAlert(), DISPLAY_DURATION);
-    });
+    ]).start(() => {});
   };
 
   hideAlert = () => {
