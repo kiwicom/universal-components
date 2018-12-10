@@ -1,7 +1,6 @@
 // @flow
 
 /* Components */
-export { Alert } from './Alert';
 export { Badge } from './Badge';
 export { Button } from './Button';
 export { Card } from './Card';
@@ -9,6 +8,7 @@ export { FilterButton } from './FilterButton';
 export { Icon } from './Icon';
 export { Loader } from './Loader';
 export { PageLoader } from './Loader';
+export { Notification } from './Notification';
 export { default as Text } from './Text';
 export { TextInput } from './TextInput';
 export { ServiceLogo } from './ServiceLogo';

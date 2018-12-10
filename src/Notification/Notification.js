@@ -6,13 +6,20 @@ import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import StyleSheet from '../PlatformStyleSheet';
-import Text from '../Text';
+import Alert from './Alert';
+import Warning from './Warning';
 
-import type { OnLayout, NotificationType } from '../types';
+import type {
+  OnLayout,
+  NotificationStyleType,
+  NotificationType,
+} from '../types';
 import type { StylePropType } from '../PlatformStyleSheet/StyleTypes';
 
 type Props = {|
   +style?: StylePropType,
+  +notificationType: NotificationType,
+  +onDismiss?: () => void,
 |};
 
 type State = {|
@@ -23,14 +30,15 @@ type State = {|
   opacity: Animated.Value,
   translateY: Animated.Value,
   isOpen: boolean,
-  alertType: NotificationType,
-  alertMessage: React.Node | string,
+  notificationStyle: NotificationStyleType,
+  notificationTitle: React.Node | string,
+  notificationMessage: React.Node | string,
 |};
 
 const ANIMATION_DURATION = 250;
 const DISPLAY_DURATION = 1500;
 
-export default class Alert extends React.Component<Props, State> {
+export default class Notification extends React.Component<Props, State> {
   state = {
     layout: {
       height: -100,
@@ -39,8 +47,9 @@ export default class Alert extends React.Component<Props, State> {
     opacity: new Animated.Value(0),
     translateY: new Animated.Value(0),
     isOpen: false,
-    alertType: 'error',
-    alertMessage: '',
+    notificationStyle: 'error',
+    notificationTitle: '',
+    notificationMessage: '',
   };
 
   _lastCallTimestamp = null;
@@ -49,6 +58,28 @@ export default class Alert extends React.Component<Props, State> {
 
   componentWillUnmount() {
     clearTimeout(this._hideTimeout);
+  }
+
+  _toggleAlert(
+    notificationStyle: NotificationStyleType,
+    title: React.Node | string,
+    message: React.Node | string
+  ) {
+    const { isOpen } = this.state;
+    const { notificationType } = this.props;
+    if (!isOpen) {
+      this.setState(
+        {
+          isOpen: true,
+          notificationStyle,
+          notificationTitle: title,
+          notificationMessage: message,
+        },
+        () => this.showNotification()
+      );
+    } else {
+      notificationType === 'alert' && this.hideNotification();
+    }
   }
 
   handleLayout = (e: OnLayout) => {
@@ -60,57 +91,53 @@ export default class Alert extends React.Component<Props, State> {
     this.setState({ layout: { height, measured: true } }, () => {
       if (measured) {
         if (!isOpen) {
-          // - 300 is mainly for displaying in storybook
-          translateY.setValue(height - 300);
+          translateY.setValue(height);
         }
       } else {
         translateY.setValue(-height - getStatusBarHeight());
         opacity.setValue(0);
 
         if (isOpen) {
-          this.showAlert();
+          this.showNotification();
         }
       }
     });
   };
 
-  _toggleAlert(type: NotificationType, message: React.Node | string) {
-    const { isOpen } = this.state;
-    if (!isOpen) {
-      this.setState({
-        isOpen: true,
-        alertType: type,
-        alertMessage: message,
-      });
-      this.showAlert();
-    } else {
-      this.hideAlert();
-    }
-  }
-
-  toggleAlert = (type: NotificationType, message: React.Node | string) => {
+  toggleAlert = (
+    notificationStyle: NotificationStyleType,
+    title: React.Node | string,
+    message: React.Node | string
+  ) => {
+    const { notificationType } = this.props;
     const { isOpen } = this.state;
     const now = Date.now();
 
+    if (notificationType === 'warning') {
+      this._toggleAlert(notificationStyle, title, message);
+    }
+
     if (
       !isOpen &&
+      notificationType === 'alert' &&
       (!this._lastCallTimestamp ||
         Math.abs(now - this._lastCallTimestamp) >= 200)
     ) {
-      this._toggleAlert(type, message);
+      this._toggleAlert(notificationStyle, title, message);
       this._defferedHideAlert = setTimeout(
-        () => this.hideAlert(),
+        () => this.hideNotification(),
         DISPLAY_DURATION
       );
     }
 
     if (
       this._lastCallTimestamp &&
+      notificationType === 'alert' &&
       Math.abs(now - this._lastCallTimestamp) < 200
     ) {
       clearTimeout(this._defferedHideAlert);
       this._defferedHideAlert = setTimeout(
-        () => this.hideAlert(),
+        () => this.hideNotification(),
         DISPLAY_DURATION
       );
     }
@@ -118,7 +145,7 @@ export default class Alert extends React.Component<Props, State> {
     this._lastCallTimestamp = now;
   };
 
-  showAlert = () => {
+  showNotification = () => {
     const { opacity, translateY } = this.state;
 
     Animated.parallel([
@@ -135,7 +162,7 @@ export default class Alert extends React.Component<Props, State> {
     ]).start(() => {});
   };
 
-  hideAlert = () => {
+  hideNotification = () => {
     const { opacity, translateY, layout } = this.state;
 
     Animated.parallel([
@@ -154,28 +181,63 @@ export default class Alert extends React.Component<Props, State> {
     });
   };
 
+  dismissNotification = () => {
+    const { onDismiss } = this.props;
+    this.hideNotification();
+    onDismiss && onDismiss();
+  };
+
   render() {
-    const { style } = this.props;
-    const { translateY, layout, opacity, alertType, alertMessage } = this.state;
+    const { style, notificationType } = this.props;
+    const {
+      translateY,
+      layout,
+      opacity,
+      notificationStyle,
+      notificationMessage,
+      notificationTitle,
+      isOpen,
+    } = this.state;
+
+    if (!isOpen) {
+      return null;
+    }
 
     let backgroundColor;
-    switch (alertType) {
+    switch (notificationStyle) {
       case 'error': {
-        backgroundColor = defaultTokens.paletteRedNormal;
+        backgroundColor =
+          notificationType === 'alert'
+            ? defaultTokens.paletteRedNormal
+            : defaultTokens.backgroundAlertCritical;
         break;
       }
       case 'warning': {
-        backgroundColor = defaultTokens.paletteOrangeNormal;
+        backgroundColor =
+          notificationType === 'alert'
+            ? defaultTokens.paletteOrangeNormal
+            : defaultTokens.backgroundAlertWarning;
         break;
       }
       case 'success': {
-        backgroundColor = defaultTokens.paletteGreenNormal;
+        backgroundColor =
+          notificationType === 'alert'
+            ? defaultTokens.paletteGreenNormal
+            : defaultTokens.backgroundAlertSuccess;
         break;
       }
       default: {
-        backgroundColor = defaultTokens.paletteOrangeNormal;
+        backgroundColor =
+          notificationType === 'alert'
+            ? defaultTokens.paletteOrangeNormal
+            : defaultTokens.backgroundAlertWarning;
       }
     }
+
+    const opacityStyle = opacity.interpolate({
+      inputRange: [0, 0.8, 1],
+      outputRange: [0, 0.2, 1],
+    });
 
     return (
       <Animated.View
@@ -194,19 +256,20 @@ export default class Alert extends React.Component<Props, State> {
           style,
         ]}
       >
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              opacity: opacity.interpolate({
-                inputRange: [0, 0.8, 1],
-                outputRange: [0, 0.2, 1],
-              }),
-            },
-          ]}
-        >
-          <Text style={[styles.content]}>{alertMessage}</Text>
-        </Animated.View>
+        {notificationType === 'alert' ? (
+          <Alert
+            style={{ opacity: opacityStyle }}
+            notificationMessage={notificationMessage}
+          />
+        ) : (
+          <Warning
+            style={{ opacity: opacityStyle }}
+            notificationStyle={notificationStyle}
+            warningTitle={notificationTitle}
+            warningMessage={notificationMessage}
+            onPress={this.dismissNotification}
+          />
+        )}
       </Animated.View>
     );
   }
@@ -220,16 +283,5 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 10,
     borderBottomEndRadius: 10,
     zIndex: 100,
-  },
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    fontSize: 14,
-    color: 'white',
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    flex: 1,
   },
 });

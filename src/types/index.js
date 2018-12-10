@@ -11,4 +11,6 @@ export type OnLayout = {
   },
 };
 
-export type NotificationType = 'error' | 'warning' | 'success';
+export type NotificationStyleType = 'error' | 'warning' | 'success';
+
+export type NotificationType = 'alert' | 'warning';

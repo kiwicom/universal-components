@@ -6,7 +6,7 @@
 // https://github.com/elderfo/react-native-storybook-loader.git
 
 function loadStories() {
-  require('../src/Alert/Alert.stories');
+  require('../src/Notification/Notification.stories');
   require('../src/Badge/Badge.stories');
   require('../src/Button/Button.stories');
   require('../src/Card/Card.stories');
@@ -20,11 +20,10 @@ function loadStories() {
   require('../src/Stepper/Stepper.stories');
   require('../src/Text/Text.stories');
   require('../src/TextInput/TextInput.stories');
-  require('../src/Warning/Warning.stories');
 }
 
 const stories = [
-  '../src/Alert/Alert.stories',
+  '../src/Notification/Notification.stories',
   '../src/Badge/Badge.stories',
   '../src/Button/Button.stories',
   '../src/Card/Card.stories',
@@ -38,7 +37,6 @@ const stories = [
   '../src/Stepper/Stepper.stories',
   '../src/Text/Text.stories',
   '../src/TextInput/TextInput.stories',
-  '../src/Warning/Warning.stories',
 ];
 
 module.exports = {
