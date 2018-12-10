@@ -1,17 +1,18 @@
 // @flow
 
 /* Components */
-export { default as Text } from './Text';
+export { Alert } from './Alert';
+export { Badge } from './Badge';
+export { Button } from './Button';
+export { Card } from './Card';
+export { FilterButton } from './FilterButton';
+export { Icon } from './Icon';
 export { Loader } from './Loader';
 export { PageLoader } from './Loader';
-export { Button } from './Button';
-export { Badge } from './Badge';
-export { Icon } from './Icon';
+export { default as Text } from './Text';
 export { TextInput } from './TextInput';
 export { ServiceLogo } from './ServiceLogo';
-export { FilterButton } from './FilterButton';
 export { Stepper } from './Stepper';
-export { Card } from './Card';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';

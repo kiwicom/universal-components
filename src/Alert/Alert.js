@@ -2,12 +2,14 @@
 
 import * as React from 'react';
 import { Animated } from 'react-native';
+import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import StyleSheet from '../PlatformStyleSheet';
-import type { StylePropType } from '../PlatformStyleSheet/StyleTypes';
-
 import Text from '../Text';
+
+import type { OnLayout, NotificationType } from '../types';
+import type { StylePropType } from '../PlatformStyleSheet/StyleTypes';
 
 type Props = {|
   +style?: StylePropType,
@@ -21,22 +23,9 @@ type State = {|
   opacity: Animated.Value,
   translateY: Animated.Value,
   isOpen: boolean,
-  alertType: AlertType,
+  alertType: NotificationType,
   alertMessage: React.Node | string,
 |};
-
-type OnLayout = {
-  +nativeEvent: {
-    +layout: {
-      +x: number,
-      +y: number,
-      +width: number,
-      +height: number,
-    },
-  },
-};
-
-type AlertType = 'error' | 'warning' | 'success';
 
 const ANIMATION_DURATION = 250;
 const DISPLAY_DURATION = 1500;
@@ -85,7 +74,7 @@ export default class Alert extends React.Component<Props, State> {
     });
   };
 
-  _toggleAlert(type: AlertType, message: React.Node | string) {
+  _toggleAlert(type: NotificationType, message: React.Node | string) {
     const { isOpen } = this.state;
     if (!isOpen) {
       this.setState({
@@ -99,7 +88,7 @@ export default class Alert extends React.Component<Props, State> {
     }
   }
 
-  toggleAlert = (type: AlertType, message: React.Node | string) => {
+  toggleAlert = (type: NotificationType, message: React.Node | string) => {
     const { isOpen } = this.state;
     const now = Date.now();
 
@@ -172,19 +161,19 @@ export default class Alert extends React.Component<Props, State> {
     let backgroundColor;
     switch (alertType) {
       case 'error': {
-        backgroundColor = '#D21C1C';
+        backgroundColor = defaultTokens.paletteRedNormal;
         break;
       }
       case 'warning': {
-        backgroundColor = '#F9971E';
+        backgroundColor = defaultTokens.paletteOrangeNormal;
         break;
       }
       case 'success': {
-        backgroundColor = '#46B655';
+        backgroundColor = defaultTokens.paletteGreenNormal;
         break;
       }
       default: {
-        backgroundColor = '#F9971E';
+        backgroundColor = defaultTokens.paletteOrangeNormal;
       }
     }
 

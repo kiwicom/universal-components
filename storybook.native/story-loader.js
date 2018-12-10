@@ -1,3 +1,4 @@
+// @flow
 
 // Auto-generated file created by react-native-storybook-loader
 // Do not edit.
@@ -19,7 +20,7 @@ function loadStories() {
   require('../src/Stepper/Stepper.stories');
   require('../src/Text/Text.stories');
   require('../src/TextInput/TextInput.stories');
-  
+  require('../src/Warning/Warning.stories');
 }
 
 const stories = [
@@ -37,7 +38,7 @@ const stories = [
   '../src/Stepper/Stepper.stories',
   '../src/Text/Text.stories',
   '../src/TextInput/TextInput.stories',
-  
+  '../src/Warning/Warning.stories',
 ];
 
 module.exports = {
