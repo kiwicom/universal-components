@@ -8,13 +8,14 @@ export { Checkbox } from './Checkbox';
 export { FilterButton } from './FilterButton';
 export { Icon } from './Icon';
 export { Loader } from './Loader';
+export { Notification } from './Notification';
 export { RadioButton } from './RadioButton';
 export { Rating } from './Rating';
 export { ServiceLogo } from './ServiceLogo';
 export { Stepper } from './Stepper';
 export { default as Text } from './Text';
 export { TextInput } from './TextInput';
-export { Notification } from './Notification';
+export { Tooltip, TooltipBubble } from './Tooltip';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';
