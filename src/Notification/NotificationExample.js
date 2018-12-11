@@ -14,18 +14,18 @@ type Props = {|
   +message: React.Node | string,
   +onDismiss?: () => void,
 |};
-export default class AlertExample extends React.Component<Props> {
+export default class NotificationExample extends React.Component<Props> {
   componentDidMount() {
-    this.renderAlert();
+    this.renderNotification();
   }
 
-  renderAlert = () => {
+  renderNotification = () => {
     const { notificationStyle, title, message } = this.props;
     this.notification &&
-      this.notification.toggleAlert(notificationStyle, title, message);
+      this.notification.toggleNotification(notificationStyle, title, message);
   };
 
-  refToAlert = (ref: ?Notification) => {
+  refToNotification = (ref: ?Notification) => {
     this.notification = ref;
   };
 
@@ -35,9 +35,9 @@ export default class AlertExample extends React.Component<Props> {
     const { notificationType, onDismiss } = this.props;
     return (
       <View style={styles.container}>
-        <Button onPress={this.renderAlert}>Press</Button>
+        <Button onPress={this.renderNotification}>Press</Button>
         <Notification
-          ref={this.refToAlert}
+          ref={this.refToNotification}
           notificationType={notificationType}
           onDismiss={onDismiss}
         />

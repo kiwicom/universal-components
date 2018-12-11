@@ -60,7 +60,7 @@ export default class Notification extends React.Component<Props, State> {
     clearTimeout(this._hideTimeout);
   }
 
-  _toggleAlert(
+  _toggleNotification(
     notificationStyle: NotificationStyleType,
     title: React.Node | string,
     message: React.Node | string
@@ -104,7 +104,7 @@ export default class Notification extends React.Component<Props, State> {
     });
   };
 
-  toggleAlert = (
+  toggleNotification = (
     notificationStyle: NotificationStyleType,
     title: React.Node | string,
     message: React.Node | string
@@ -114,7 +114,7 @@ export default class Notification extends React.Component<Props, State> {
     const now = Date.now();
 
     if (notificationType === 'warning') {
-      this._toggleAlert(notificationStyle, title, message);
+      this._toggleNotification(notificationStyle, title, message);
     }
 
     if (
@@ -123,7 +123,7 @@ export default class Notification extends React.Component<Props, State> {
       (!this._lastCallTimestamp ||
         Math.abs(now - this._lastCallTimestamp) >= 200)
     ) {
-      this._toggleAlert(notificationStyle, title, message);
+      this._toggleNotification(notificationStyle, title, message);
       this._defferedHideAlert = setTimeout(
         () => this.hideNotification(),
         DISPLAY_DURATION
