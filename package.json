@@ -16,7 +16,8 @@
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "build": "cd scripts && yarn"
+    "build": "cd scripts && yarn",
+    "release": "release-it"
   },
   "files": [
     "lib"
@@ -70,6 +71,7 @@
     "react-native-web-image-loader": "^0.0.6",
     "react-test-renderer": "16.6.1",
     "regenerator-runtime": "^0.12.1",
+    "release-it": "^8.4.2",
     "rimraf": "^2.6.2",
     "snapshot-diff": "^0.4.0",
     "webpack": "^4.25.1"
