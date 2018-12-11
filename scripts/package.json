@@ -20,6 +20,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-react-native-web": "^0.9.9",
+    "conventional-changelog-cli": "^2.0.11",
     "copyfiles": "^2.1.0",
     "flow-copy-source": "^2.0.2",
     "metro-react-native-babel-preset": "^0.50.0",
