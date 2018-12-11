@@ -16,7 +16,8 @@
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack"
+    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack",
+    "postinstall": "node ./scripts/postInstall.js"
   },
   "files": [
     "/lib",
@@ -32,7 +33,8 @@
   "author": "kiwi.com",
   "license": "MIT",
   "dependencies": {
-    "@kiwicom/orbit-design-tokens": "^0.2.5"
+    "@kiwicom/orbit-design-tokens": "^0.2.5",
+    "intl": "^1.2.5"
   },
   "peerDependencies": {
     "react": "16.6.1",
