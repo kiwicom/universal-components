@@ -10,19 +10,16 @@
     "prestorybook-native": "node ./node_modules/.bin/rnstl",
     "storybook-native": "storybook -c storybook.native start -p 7007",
     "test": "node node_modules/jest/bin/jest.js --config=.jest.json",
-    "lint": "eslint src scripts index.js --report-unused-disable-directives",
+    "lint": "eslint src index.js --report-unused-disable-directives",
     "flow": "flow --include-warnings",
     "test-ci": "yarn lint && yarn flow && yarn test",
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack"
+    "build": "cd scripts && yarn"
   },
   "files": [
-    "/lib",
-    "package.json",
-    ".babelrc",
-    "README.md"
+    "lib"
   ],
   "keywords": [
     "react",
