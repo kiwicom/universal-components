@@ -2,7 +2,7 @@
 #
 storybook-static
 .cache
-.storybook-native/story-loader.js
+storybook.native/story-loader.js
 
 # OSX
 #
@@ -63,6 +63,9 @@ buck-out/
 
 #build
 lib/
+
+# Output of 'npm pack'
+*.tgz
 
 #Jest
 /coverage

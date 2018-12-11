@@ -33,8 +33,8 @@ export default function Stepper({
   disableDecrement: originalDisableDecrement,
   disableIncrement: originalDisableIncrement,
 }: Props) {
-  const belowMin = min && number <= min;
-  const aboveMax = max && number >= max;
+  const belowMin = min != null && number <= min;
+  const aboveMax = max != null && number >= max;
   const disableDecrement = belowMin ?? originalDisableDecrement;
   const disableIncrement = aboveMax ?? originalDisableIncrement;
 

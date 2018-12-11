@@ -4,15 +4,17 @@
 export { Badge } from './Badge';
 export { Button } from './Button';
 export { Card } from './Card';
+export { Checkbox } from './Checkbox';
 export { FilterButton } from './FilterButton';
 export { Icon } from './Icon';
 export { Loader } from './Loader';
-export { PageLoader } from './Loader';
-export { Notification } from './Notification';
-export { default as Text } from './Text';
-export { TextInput } from './TextInput';
+export { RadioButton } from './RadioButton';
+export { Rating } from './Rating';
 export { ServiceLogo } from './ServiceLogo';
 export { Stepper } from './Stepper';
+export { default as Text } from './Text';
+export { TextInput } from './TextInput';
+export { Notification } from './Notification';
 
 /* Utils */
 export { default as StyleSheet } from './PlatformStyleSheet';
