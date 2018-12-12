@@ -23,7 +23,7 @@ type Props = {|
 
 const AnimatedTouchable = Animated.createAnimatedComponent(Touchable);
 
-export default function Warning({
+export default function ImportantNotification({
   style,
   onPress,
   warningTitle,
@@ -92,7 +92,7 @@ export default function Warning({
 
 const styles = StyleSheet.create({
   header: {
-    fontWeight: '700',
+    fontWeight: 'bold',
     paddingBottom: 5,
   },
   content: {
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     fontSize: 14,
-    color: 'white',
+    color: defaultTokens.paletteWhite,
     flex: 1,
     paddingVertical: 5,
   },

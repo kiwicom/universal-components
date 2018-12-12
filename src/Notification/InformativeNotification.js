@@ -1,6 +1,7 @@
 /* @flow */
 
 import * as React from 'react';
+import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 import { Animated } from 'react-native';
 
 import StyleSheet from '../PlatformStyleSheet';
@@ -13,7 +14,10 @@ type Props = {|
   +notificationMessage: React.Node | string,
 |};
 
-export default function Alert({ style, notificationMessage }: Props) {
+export default function InformativeNotification({
+  style,
+  notificationMessage,
+}: Props) {
   return (
     <Animated.View style={[styles.container, style]}>
       <Text style={[styles.content]}>{notificationMessage}</Text>
@@ -28,9 +32,8 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 14,
-    color: 'white',
-    paddingVertical: 8,
-    paddingHorizontal: 8,
+    color: defaultTokens.paletteWhite,
+    padding: 8,
     flex: 1,
   },
 });

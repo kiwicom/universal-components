@@ -13,4 +13,4 @@ export type OnLayout = {
 
 export type NotificationStyleType = 'error' | 'warning' | 'success';
 
-export type NotificationType = 'alert' | 'warning';
+export type NotificationType = 'informative' | 'important';

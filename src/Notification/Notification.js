@@ -6,8 +6,8 @@ import { defaultTokens } from '@kiwicom/orbit-design-tokens';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import StyleSheet from '../PlatformStyleSheet';
-import Alert from './Alert';
-import Warning from './Warning';
+import InformativeNotification from './InformativeNotification';
+import ImportantNotification from './ImportantNotification';
 
 import type {
   OnLayout,
@@ -37,6 +37,7 @@ type State = {|
 
 const ANIMATION_DURATION = 250;
 const DISPLAY_DURATION = 1500;
+const LIVE_OVER_DURATION = 200;
 
 export default class Notification extends React.Component<Props, State> {
   state = {
@@ -52,21 +53,23 @@ export default class Notification extends React.Component<Props, State> {
     notificationMessage: '',
   };
 
-  _lastCallTimestamp = null;
-  _defferedHideAlert = undefined;
-  _hideTimeout: TimeoutID;
+  lastCallTimestamp = null;
+  defferedHideAlert = undefined;
+  hideTimeout: TimeoutID;
 
   componentWillUnmount() {
-    clearTimeout(this._hideTimeout);
+    clearTimeout(this.hideTimeout);
   }
 
-  _toggleNotification(
+  internalToggleNotification(
     notificationStyle: NotificationStyleType,
     title: React.Node | string,
     message: React.Node | string
   ) {
     const { isOpen } = this.state;
     const { notificationType } = this.props;
+    const isInformative = notificationType === 'informative';
+
     if (!isOpen) {
       this.setState(
         {
@@ -78,7 +81,7 @@ export default class Notification extends React.Component<Props, State> {
         () => this.showNotification()
       );
     } else {
-      notificationType === 'alert' && this.hideNotification();
+      isInformative && this.hideNotification();
     }
   }
 
@@ -113,36 +116,39 @@ export default class Notification extends React.Component<Props, State> {
     const { isOpen } = this.state;
     const now = Date.now();
 
-    if (notificationType === 'warning') {
-      this._toggleNotification(notificationStyle, title, message);
+    const isImportant = notificationType === 'important';
+    const isInformative = notificationType === 'informative';
+    const timeToLiveOver = Math.abs(now - (this.lastCallTimestamp || 0));
+
+    if (isImportant) {
+      this.internalToggleNotification(notificationStyle, title, message);
     }
 
     if (
       !isOpen &&
-      notificationType === 'alert' &&
-      (!this._lastCallTimestamp ||
-        Math.abs(now - this._lastCallTimestamp) >= 200)
+      isInformative &&
+      (!this.lastCallTimestamp || timeToLiveOver >= LIVE_OVER_DURATION)
     ) {
-      this._toggleNotification(notificationStyle, title, message);
-      this._defferedHideAlert = setTimeout(
+      this.internalToggleNotification(notificationStyle, title, message);
+      this.defferedHideAlert = setTimeout(
         () => this.hideNotification(),
         DISPLAY_DURATION
       );
     }
 
     if (
-      this._lastCallTimestamp &&
-      notificationType === 'alert' &&
-      Math.abs(now - this._lastCallTimestamp) < 200
+      this.lastCallTimestamp &&
+      isInformative &&
+      timeToLiveOver < LIVE_OVER_DURATION
     ) {
-      clearTimeout(this._defferedHideAlert);
-      this._defferedHideAlert = setTimeout(
+      clearTimeout(this.defferedHideAlert);
+      this.defferedHideAlert = setTimeout(
         () => this.hideNotification(),
         DISPLAY_DURATION
       );
     }
 
-    this._lastCallTimestamp = now;
+    this.lastCallTimestamp = now;
   };
 
   showNotification = () => {
@@ -159,7 +165,7 @@ export default class Notification extends React.Component<Props, State> {
         duration: ANIMATION_DURATION,
         useNativeDriver: true,
       }),
-    ]).start(() => {});
+    ]).start();
   };
 
   hideNotification = () => {
@@ -203,34 +209,32 @@ export default class Notification extends React.Component<Props, State> {
       return null;
     }
 
+    const isInformative = notificationType === 'informative';
+
     let backgroundColor;
     switch (notificationStyle) {
       case 'error': {
-        backgroundColor =
-          notificationType === 'alert'
-            ? defaultTokens.paletteRedNormal
-            : defaultTokens.backgroundAlertCritical;
+        backgroundColor = isInformative
+          ? defaultTokens.paletteRedNormal
+          : defaultTokens.backgroundAlertCritical;
         break;
       }
       case 'warning': {
-        backgroundColor =
-          notificationType === 'alert'
-            ? defaultTokens.paletteOrangeNormal
-            : defaultTokens.backgroundAlertWarning;
+        backgroundColor = isInformative
+          ? defaultTokens.paletteOrangeNormal
+          : defaultTokens.backgroundAlertWarning;
         break;
       }
       case 'success': {
-        backgroundColor =
-          notificationType === 'alert'
-            ? defaultTokens.paletteGreenNormal
-            : defaultTokens.backgroundAlertSuccess;
+        backgroundColor = isInformative
+          ? defaultTokens.paletteGreenNormal
+          : defaultTokens.backgroundAlertSuccess;
         break;
       }
       default: {
-        backgroundColor =
-          notificationType === 'alert'
-            ? defaultTokens.paletteOrangeNormal
-            : defaultTokens.backgroundAlertWarning;
+        backgroundColor = isInformative
+          ? defaultTokens.paletteOrangeNormal
+          : defaultTokens.backgroundAlertWarning;
       }
     }
 
@@ -256,13 +260,13 @@ export default class Notification extends React.Component<Props, State> {
           style,
         ]}
       >
-        {notificationType === 'alert' ? (
-          <Alert
+        {notificationType === 'informative' ? (
+          <InformativeNotification
             style={{ opacity: opacityStyle }}
             notificationMessage={notificationMessage}
           />
         ) : (
-          <Warning
+          <ImportantNotification
             style={{ opacity: opacityStyle }}
             notificationStyle={notificationStyle}
             warningTitle={notificationTitle}

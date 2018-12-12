@@ -12,8 +12,8 @@ storiesOf('Notification', module)
   .add('Playground', () => {
     const notificationType = select(
       'Notification type',
-      ['alert', 'warning'],
-      'warning'
+      ['informative', 'important'],
+      'informative'
     );
     const notificationStyle = select(
       'Notification style',
