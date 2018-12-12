@@ -42,7 +42,7 @@ export default function ImportantNotification({
       iconColor = defaultTokens.colorIconCritical;
       iconLeft = 'alert';
       iconRight = 'chevron-right';
-      iconSize = 36;
+      iconSize = 'medium';
       break;
     }
     case 'warning': {
@@ -50,7 +50,7 @@ export default function ImportantNotification({
       iconColor = defaultTokens.colorIconWarning;
       iconLeft = 'alert';
       iconRight = 'chevron-right';
-      iconSize = 36;
+      iconSize = 'medium';
       break;
     }
     case 'success': {
@@ -58,7 +58,7 @@ export default function ImportantNotification({
       iconColor = defaultTokens.colorIconSuccess;
       iconLeft = 'information-circle';
       iconRight = 'close';
-      iconSize = 30;
+      iconSize = 'medium';
       break;
     }
     default: {
@@ -66,7 +66,7 @@ export default function ImportantNotification({
       iconColor = defaultTokens.colorAlertIconWarning;
       iconLeft = 'alert';
       iconRight = 'chevron-right';
-      iconSize = 36;
+      iconSize = 'medium';
     }
   }
 
