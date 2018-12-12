@@ -32,7 +32,7 @@ type Props = {|
   +departure?: Trip,
 |};
 
-export default function NavigationHeader({
+export default function SearchParamsSummary({
   tripType,
   arrival,
   departure,

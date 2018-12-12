@@ -16,10 +16,25 @@ type FormatterConfig = {|
   +second?: 'numeric' | '2-digit',
 |};
 
-const DEVICE_LOCALE =
-  Platform.OS === 'ios'
-    ? NativeModules.SettingsManager.settings.AppleLocale.replace('_', '-')
-    : NativeModules.I18nManager.localeIdentifier.replace('_', '-');
+let DEVICE_LOCALE;
+
+switch (Platform.OS) {
+  case 'ios':
+    DEVICE_LOCALE = NativeModules.SettingsManager.settings.AppleLocale.replace(
+      '_',
+      '-'
+    );
+    break;
+
+  case 'android':
+    DEVICE_LOCALE = NativeModules.I18nManager.localeIdentifier.replace(
+      '_',
+      '-'
+    );
+    break;
+  default:
+    DEVICE_LOCALE;
+}
 
 function regularDate(date: Date) {
   return Intl.DateTimeFormat(DEVICE_LOCALE, {

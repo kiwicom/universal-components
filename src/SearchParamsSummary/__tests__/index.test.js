@@ -5,7 +5,7 @@ import { render } from 'react-native-testing-library';
 
 import Text from '../../Text';
 import { Icon } from '../../Icon';
-import { NavigationHeader } from '../index';
+import { SearchParamsSummary } from '../index';
 import AdaptableBadge from '../AdaptableBadge';
 
 jest.mock('../../utils/DateUtils/DateFormatter', () => () => ({
@@ -14,7 +14,7 @@ jest.mock('../../utils/DateUtils/DateFormatter', () => () => ({
 
 const renderHeaderComponent = (tripType, component) => {
   const { getByType } = render(
-    <NavigationHeader
+    <SearchParamsSummary
       tripType={tripType}
       departure={{ city: 'Wroclaw', date: '2018-10-10' }}
       arrival={{ city: 'Prague', date: '2018-12-12' }}
@@ -24,7 +24,7 @@ const renderHeaderComponent = (tripType, component) => {
   return getByType(component);
 };
 
-describe('NavigationHeader', () => {
+describe('SearchParamsSummary', () => {
   it('should have icon name "flight-direct" when trip type is "OneWay"', () => {
     const icon = renderHeaderComponent('OneWay', Icon);
 
@@ -45,7 +45,7 @@ describe('NavigationHeader', () => {
 
   it('should render badge with date', () => {
     const { getAllByType } = render(
-      <NavigationHeader
+      <SearchParamsSummary
         tripType="Return"
         departure={{ city: 'Wroclaw', date: '2018-10-10' }}
         arrival={{ city: 'Prague', date: '2018-12-12' }}
@@ -59,7 +59,7 @@ describe('NavigationHeader', () => {
 
   it('should render proper departure and arrival cities', () => {
     const { getAllByType } = render(
-      <NavigationHeader
+      <SearchParamsSummary
         tripType="Return"
         departure={{ city: 'Wroclaw', date: '2018-10-10' }}
         arrival={{ city: 'Prague', date: '2018-12-12' }}

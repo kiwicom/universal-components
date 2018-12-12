@@ -4,9 +4,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { withKnobs, select } from '@storybook/addon-knobs';
 
-import NavigationHeader from './NavigationHeader';
+import SearchParamsSummary from './SearchParamsSummary';
 
-storiesOf('NavigationHeader', module)
+storiesOf('SearchParamsSummary', module)
   .addDecorator(withKnobs)
   .add('Playground', () => {
     const tripType = select(
@@ -16,7 +16,7 @@ storiesOf('NavigationHeader', module)
     );
 
     return (
-      <NavigationHeader
+      <SearchParamsSummary
         tripType={tripType}
         departure={{ city: 'Wroclaw', date: '2018-10-10' }}
         arrival={{ city: 'Prague', date: '2018-12-12' }}
