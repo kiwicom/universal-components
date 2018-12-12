@@ -15,6 +15,12 @@ const dateFormat = {
   month: 'short',
 };
 
+const oneWayDateFormat = {
+  day: '2-digit',
+  month: 'long',
+  weekday: 'long',
+};
+
 type Trip = {|
   +city: string,
   +date: string,
@@ -46,6 +52,7 @@ export default function NavigationHeader({
     default:
       icon = 'flight-return';
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerLeftcontainer}>
@@ -66,7 +73,7 @@ export default function NavigationHeader({
                   style={styles.badge}
                   textStyle={styles.badgeText}
                   text={DateFormatter(new Date(arrival.date)).formatCustom(
-                    dateFormat
+                    oneWayDateFormat
                   )}
                 />
               </View>
@@ -79,7 +86,7 @@ export default function NavigationHeader({
                     dateFormat
                   )}
                 />
-                <Text style={{ color: 'black' }}> to </Text>
+                <Text style={styles.connector}> to </Text>
                 <AdaptableBadge
                   style={styles.badge}
                   textStyle={styles.badgeText}
@@ -107,38 +114,38 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: defaultTokens.paletteInkLighter,
   },
+  connector: {
+    color: defaultTokens.paletteInkDark,
+  },
   citiesContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 3,
+    paddingTop: 8,
   },
   headerLeftcontainer: {
     flexDirection: 'column',
     paddingStart: 16,
   },
   departureCity: {
-    fontWeight: '800',
+    fontWeight: 'bold',
     marginEnd: 5,
-    fontSize: 16,
+    fontSize: parseFloat(defaultTokens.fontSizeTextLarge),
     color: defaultTokens.colorTextAttention,
-    // marginBottom: 3,
-    // paddingTop: 8,
   },
   arrivalCity: {
-    fontWeight: '800',
+    fontWeight: 'bold',
     marginStart: 5,
-    fontSize: 16,
+    fontSize: parseFloat(defaultTokens.fontSizeTextLarge),
     color: defaultTokens.colorTextAttention,
-    // marginBottom: 3,
-    // paddingTop: 8,
   },
   badgeText: {
-    fontSize: 12,
+    fontSize: parseFloat(defaultTokens.fontSizeTextSmall),
     color: defaultTokens.colorTextPrimary,
   },
   badge: {
     backgroundColor: defaultTokens.paletteCloudNormal,
-    // marginBottom: 12,
   },
   row: {
     flexDirection: 'row',

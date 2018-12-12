@@ -1,5 +1,6 @@
 // @flow strict
 
+import { NativeModules, Platform } from 'react-native';
 import DateUtils from './DateUtils';
 
 import 'intl'; // Polyfill because of Android
@@ -15,9 +16,10 @@ type FormatterConfig = {|
   +second?: 'numeric' | '2-digit',
 |};
 
-// language prop passed from native code is not accessible at this point
-// TODO: Handle device locale
-const DEVICE_LOCALE = 'en-US';
+const DEVICE_LOCALE =
+  Platform.OS === 'ios'
+    ? NativeModules.SettingsManager.settings.AppleLocale.replace('_', '-')
+    : NativeModules.I18nManager.localeIdentifier.replace('_', '-');
 
 function regularDate(date: Date) {
   return Intl.DateTimeFormat(DEVICE_LOCALE, {

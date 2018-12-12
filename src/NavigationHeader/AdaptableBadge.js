@@ -16,20 +16,6 @@ type Props = {|
   +icon?: React.Node,
 |};
 
-/**
- * This badge automatically adapt width based on the text length inside so the
- * result looks like this:
- *
- * .----------.
- * | VERIFIED |
- * `----------`
- *
- * And it expands with long text:
- *
- * .-------------------------------------------------.
- * | UNVERIFIED with very long text to make it clear |
- * `-------------------------------------------------`
- */
 export default function AdaptableBadge({
   style,
   icon,
