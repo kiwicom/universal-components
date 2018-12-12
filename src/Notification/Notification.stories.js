@@ -20,7 +20,7 @@ storiesOf('Notification', module)
       ['error', 'warning', 'success'],
       'warning'
     );
-    const message = text('Alert message', 'Error message');
+    const message = text('Message', 'Error message');
     const title = text('Title', 'Error');
 
     return (

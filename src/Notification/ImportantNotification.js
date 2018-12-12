@@ -16,8 +16,8 @@ import Text from '../Text';
 type Props = {|
   +style?: StylePropType,
   +notificationStyle: NotificationStyleType,
-  +warningTitle: React.Node | string,
-  +warningMessage: React.Node | string,
+  +notificationTitle: React.Node | string,
+  +notificationMessage: React.Node | string,
   +onPress: () => void,
 |};
 
@@ -26,8 +26,8 @@ const AnimatedTouchable = Animated.createAnimatedComponent(Touchable);
 export default function ImportantNotification({
   style,
   onPress,
-  warningTitle,
-  warningMessage,
+  notificationTitle,
+  notificationMessage,
   notificationStyle,
 }: Props) {
   let color;
@@ -78,9 +78,10 @@ export default function ImportantNotification({
         </View>
         <View style={styles.content}>
           <Text style={[styles.header, { color }]}>
-            {typeof warningTitle === 'string' && warningTitle.toUpperCase()}
+            {typeof notificationTitle === 'string' &&
+              notificationTitle.toUpperCase()}
           </Text>
-          <Text style={[{ color }]}>{warningMessage}</Text>
+          <Text style={[{ color }]}>{notificationMessage}</Text>
         </View>
         <View style={styles.rightIcon}>
           <Icon name={iconRight} color={iconColor} size={iconSize} />

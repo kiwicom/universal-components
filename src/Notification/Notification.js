@@ -269,8 +269,8 @@ export default class Notification extends React.Component<Props, State> {
           <ImportantNotification
             style={{ opacity: opacityStyle }}
             notificationStyle={notificationStyle}
-            warningTitle={notificationTitle}
-            warningMessage={notificationMessage}
+            notificationTitle={notificationTitle}
+            notificationMessage={notificationMessage}
             onPress={this.dismissNotification}
           />
         )}
