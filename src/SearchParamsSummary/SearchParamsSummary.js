@@ -107,10 +107,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 64,
-    marginTop: Platform.select({
-      ios: 0,
-      android: StatusBar.currentHeight,
-    }),
     borderBottomWidth: 1,
     borderBottomColor: defaultTokens.paletteInkLighter,
   },
