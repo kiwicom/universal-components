@@ -12,7 +12,7 @@ jest.mock('../../utils/DateUtils/DateFormatter', () => ({
   custom: () => 'Oct 10',
 }));
 
-const renderHeaderComponent = (tripType, component) => {
+const renderSearchParamsSummary = (tripType, component) => {
   const { getByType } = render(
     <SearchParamsSummary
       tripType={tripType}
@@ -26,19 +26,19 @@ const renderHeaderComponent = (tripType, component) => {
 
 describe('SearchParamsSummary', () => {
   it('should have icon name "flight-direct" when trip type is "OneWay"', () => {
-    const icon = renderHeaderComponent('OneWay', Icon);
+    const icon = renderSearchParamsSummary('OneWay', Icon);
 
     expect(icon.props.name).toBe('flight-direct');
   });
 
   it('should have icon name "flight-multicity" when trip type is "MultiCity"', () => {
-    const icon = renderHeaderComponent('MultiCity', Icon);
+    const icon = renderSearchParamsSummary('MultiCity', Icon);
 
     expect(icon.props.name).toBe('flight-multicity');
   });
 
   it('should have icon name "flight-direct" when trip type is "Return"', () => {
-    const icon = renderHeaderComponent('Return', Icon);
+    const icon = renderSearchParamsSummary('Return', Icon);
 
     expect(icon.props.name).toBe('flight-return');
   });
