@@ -1,8 +1,8 @@
 {
   "name": "@kiwicom/universal-components",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "The proof of concept of universal components.",
-  "main": "lib/index.js",
+  "main": "lib",
   "scripts": {
     "native": "node node_modules/react-native/local-cli/cli.js start",
     "storybook": "start-storybook -p 9009 -c .storybook",
@@ -10,20 +10,18 @@
     "prestorybook-native": "node ./node_modules/.bin/rnstl",
     "storybook-native": "storybook -c storybook.native start -p 7007",
     "test": "node node_modules/jest/bin/jest.js --config=.jest.json",
-    "lint": "eslint src scripts index.js --report-unused-disable-directives",
+    "lint": "eslint src index.js --report-unused-disable-directives",
     "flow": "flow --include-warnings",
     "test-ci": "yarn lint && yarn flow && yarn test",
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "npm-publish": "yarn babel-node scripts/createPackage.js && yarn pack",
+    "build": "cd scripts && yarn",
+    "release": "release-it",
     "postinstall": "node ./scripts/postInstall.js"
   },
   "files": [
-    "/lib",
-    "package.json",
-    ".babelrc",
-    "README.md"
+    "lib"
   ],
   "keywords": [
     "react",
@@ -33,7 +31,10 @@
   "author": "kiwi.com",
   "license": "MIT",
   "dependencies": {
+    "@kiwicom/orbit-components": "^0.23.0",
     "@kiwicom/orbit-design-tokens": "^0.2.5",
+    "react-native-status-bar-height": "^2.2.0",
+    "styled-components": "^4.1.2",
     "intl": "^1.2.5"
   },
   "peerDependencies": {
@@ -75,6 +76,7 @@
     "react-native-web-image-loader": "^0.0.6",
     "react-test-renderer": "16.6.1",
     "regenerator-runtime": "^0.12.1",
+    "release-it": "^8.4.2",
     "rimraf": "^2.6.2",
     "snapshot-diff": "^0.4.0",
     "webpack": "^4.25.1"
