@@ -36,79 +36,57 @@ switch (Platform.OS) {
     DEVICE_LOCALE;
 }
 
-function regularDate(date: Date) {
-  return Intl.DateTimeFormat(DEVICE_LOCALE, {
-    timeZone: 'UTC', // this is very important!
-    weekday: 'short',
-    month: 'numeric',
-    day: 'numeric',
-  }).format(date);
-}
-
-function shortDate(date: Date) {
-  return Intl.DateTimeFormat(DEVICE_LOCALE, {
-    timeZone: 'UTC', // this is very important!
-    month: 'numeric',
-    day: 'numeric',
-  }).format(date);
-}
-
-function time(date: Date) {
-  return Intl.DateTimeFormat(DEVICE_LOCALE, {
-    timeZone: 'UTC', // this is very important!
-    hour: 'numeric',
-    minute: 'numeric',
-  }).format(date);
-}
-
-function birthday(date: Date) {
-  return Intl.DateTimeFormat(DEVICE_LOCALE, {
-    timeZone: 'UTC', // this is very important!
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  }).format(date);
-}
-
-function custom(date: Date, config: FormatterConfig) {
-  return Intl.DateTimeFormat(DEVICE_LOCALE, {
-    ...config,
-    timeZone: 'UTC', // this is very important!
-  }).format(date);
-}
-
-function pad(number) {
+const pad = number => {
   if (number < 10) {
     return `0${number}`;
   }
   return number;
-}
+};
 
-/**
- * Purpose of this wrapper is to make very opinionated and restrictive
- * formatter. Every function is localized and you should never call formatting
- * on the raw Date object.
- */
-function DateFormatter(rawDate: Date = DateUtils.getUTCNow()) {
-  return {
-    formatToDate: () => regularDate(rawDate),
-    formatToTime: () => time(rawDate),
-    formatToShortDate: () => shortDate(rawDate),
-
-    // note: I am not sure about the naming - improve when needed
-    formatToBirthday: () => birthday(rawDate),
-
-    /**
-     * Always returns YYYY-MM-DD at this moment.
-     */
-    formatForMachine: () =>
-      `${rawDate.getUTCFullYear()}-${pad(rawDate.getUTCMonth() + 1)}-${pad(
-        rawDate.getUTCDate()
-      )}`,
-
-    // Pass in your own configuration
-    formatCustom: (config: FormatterConfig) => custom(rawDate, config),
+const createDateFormatter = (config: FormatterConfig) =>
+  function dateFromtater(date: Date = DateUtils.getUTCNow()) {
+    return Intl.DateTimeFormat(DEVICE_LOCALE, {
+      ...config,
+      timeZone: 'UTC', // this is very important!
+    }).format(date);
   };
-}
 
-export default DateFormatter;
+const birthday = createDateFormatter({
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+});
+
+const time = createDateFormatter({
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
+const shortDate = createDateFormatter({
+  month: 'numeric',
+  day: 'numeric',
+});
+
+const regularDate = createDateFormatter({
+  weekday: 'short',
+  month: 'numeric',
+  day: 'numeric',
+});
+
+const machineDate = (date: Date = DateUtils.getUTCNow()) =>
+  `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(
+    date.getUTCDate()
+  )}`;
+
+const custom = (date: Date = DateUtils.getUTCNow(), config: FormatterConfig) =>
+  createDateFormatter(config)(date);
+
+export {
+  createDateFormatter,
+  time,
+  birthday,
+  custom,
+  shortDate,
+  regularDate,
+  machineDate,
+};

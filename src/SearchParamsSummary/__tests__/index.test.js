@@ -8,8 +8,8 @@ import { Icon } from '../../Icon';
 import { SearchParamsSummary } from '../index';
 import AdaptableBadge from '../AdaptableBadge';
 
-jest.mock('../../utils/DateUtils/DateFormatter', () => () => ({
-  formatCustom: () => 'Oct 10',
+jest.mock('../../utils/DateUtils/DateFormatter', () => ({
+  custom: () => 'Oct 10',
 }));
 
 const renderHeaderComponent = (tripType, component) => {

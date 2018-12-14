@@ -1,9 +1,9 @@
 // @flow strict
 
 import * as React from 'react';
-import { View, Platform, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import { defaultTokens } from '@kiwicom/orbit-design-tokens';
-import DateFormatter from '../utils/DateUtils/DateFormatter';
+import { custom } from '../utils/DateUtils/DateFormatter';
 
 import AdaptableBadge from './AdaptableBadge';
 import { Icon } from '../Icon';
@@ -57,13 +57,9 @@ export default function SearchParamsSummary({
     <View style={styles.container}>
       <View style={styles.headerLeftcontainer}>
         <View style={styles.citiesContainer}>
-          <Text style={styles.departureCity}>
-            {(departure && departure.city) || ''}
-          </Text>
+          <Text style={styles.departureCity}>{departure?.city || ''}</Text>
           <Icon name={icon} />
-          <Text style={styles.arrivalCity}>
-            {(arrival && arrival.city) || ''}
-          </Text>
+          <Text style={styles.arrivalCity}>{arrival?.city || ''}</Text>
         </View>
         {arrival != null && departure != null && (
           <View>
@@ -72,9 +68,7 @@ export default function SearchParamsSummary({
                 <AdaptableBadge
                   style={styles.badge}
                   textStyle={styles.badgeText}
-                  text={DateFormatter(new Date(arrival.date)).formatCustom(
-                    oneWayDateFormat
-                  )}
+                  text={custom(new Date(arrival.date), oneWayDateFormat)}
                 />
               </View>
             ) : (
@@ -82,17 +76,13 @@ export default function SearchParamsSummary({
                 <AdaptableBadge
                   style={styles.badge}
                   textStyle={styles.badgeText}
-                  text={DateFormatter(new Date(departure.date)).formatCustom(
-                    dateFormat
-                  )}
+                  text={custom(new Date(departure.date), dateFormat)}
                 />
                 <Text style={styles.connector}> to </Text>
                 <AdaptableBadge
                   style={styles.badge}
                   textStyle={styles.badgeText}
-                  text={DateFormatter(new Date(arrival.date)).formatCustom(
-                    dateFormat
-                  )}
+                  text={custom(new Date(arrival.date), dateFormat)}
                 />
               </View>
             )}
