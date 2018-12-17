@@ -11,32 +11,14 @@ import StyleSheet from '../PlatformStyleSheet';
 const Placeholder = () => (
   <View style={styles.container}>
     <View style={styles.pricePlaceholder}>
-      <Shimmer
-        style={{
-          backgroundColor: defaultTokens.paletteCloudLightActive,
-          height: 25,
-          borderRadius: parseFloat(defaultTokens.borderRadiusLarge),
-        }}
-      />
+      <Shimmer style={[styles.defaultPlaceholder, styles.large]} />
     </View>
     <View style={[styles.bottomContainer, styles.padding]}>
       <View style={styles.placePlacholder}>
-        <Shimmer
-          style={{
-            backgroundColor: defaultTokens.paletteCloudLightActive,
-            height: 16,
-            borderRadius: parseFloat(defaultTokens.borderRadiusLarge),
-          }}
-        />
+        <Shimmer style={[styles.defaultPlaceholder, styles.small]} />
       </View>
       <View style={styles.countryPlaceholder}>
-        <Shimmer
-          style={{
-            backgroundColor: defaultTokens.paletteCloudLightActive,
-            height: 16,
-            borderRadius: parseFloat(defaultTokens.borderRadiusLarge),
-          }}
-        />
+        <Shimmer style={[styles.defaultPlaceholder, styles.small]} />
       </View>
     </View>
   </View>
@@ -54,6 +36,12 @@ const styles = StyleSheet.create({
     width: 100,
     padding: 10,
   },
+  small: {
+    height: 16,
+  },
+  large: {
+    height: 25,
+  },
   placePlacholder: {
     marginBottom: 4,
     width: 200,
@@ -63,6 +51,10 @@ const styles = StyleSheet.create({
   },
   padding: {
     padding: 10,
+  },
+  defaultPlaceholder: {
+    backgroundColor: defaultTokens.paletteCloudLightActive,
+    borderRadius: parseFloat(defaultTokens.borderRadiusLarge),
   },
 });
 

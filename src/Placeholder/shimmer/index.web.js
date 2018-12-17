@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from 'react';
+import { View } from 'react-native';
 import styled, { keyframes } from 'styled-components';
 
 const animation = keyframes`
@@ -13,7 +14,7 @@ const animation = keyframes`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(View)`
   position: relative;
   display: inline-block;
   overflow: hidden;
