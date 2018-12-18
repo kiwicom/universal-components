@@ -3,11 +3,12 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 import PlaceCard from './PlaceCard';
 import Placeholder from './Placeholder';
 
-const noop = () => {};
+const noop = action('placeCard-press');
 
 type State = {
   isReady: boolean,
