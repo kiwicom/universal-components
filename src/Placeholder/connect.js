@@ -4,12 +4,10 @@ import * as React from 'react';
 
 type Props = {
   onReady?: boolean,
-  children: React.Node,
-  animate?: string,
-  customAnimate?: () => void,
+  children?: React.Node,
 };
 
-const connect = (PlaceholderComponent: any) => {
+const connect = (PlaceholderComponent: React.ComponentType<Props>) => {
   function placeholder(props: Props) {
     const { onReady, children, ...otherProps } = props;
 
