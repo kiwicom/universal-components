@@ -20,11 +20,13 @@ yarn storybook
 
 ### Mobile
 
-After running `yarn`, you also need to link assets using:
-
 ```bash
-react-native link
+// This command is optional in order to control the app via your browser
+yarn storybook-native
 ```
+
+After running storybook-native, you can navigate to http://localhost:7007 which will make the experience of working
+with the app easier. Then, you can run it either on iOS or Android:
 
 #### iOS
 
