@@ -16,9 +16,9 @@
     "rnstl": "rnstl",
     "ios": "rnstl && react-native run-ios",
     "android": "rnstl && react-native run-android",
-    "build": "cd scripts && yarn",
+    "build": "yarn && cd scripts && yarn",
     "release": "release-it",
-    "postinstall": "node ./scripts/postInstall.js"
+    "postinstall": "node ./scripts/postInstall.js && node ./scripts/generateTypes.js"
   },
   "files": [
     "lib"
@@ -73,7 +73,7 @@
     "react-native": "^0.57.5",
     "react-native-storybook-loader": "^1.8.0",
     "react-native-testing-library": "^1.4.1",
-    "react-native-web": "^0.9.7",
+    "react-native-web": "^0.9.9",
     "react-native-web-image-loader": "^0.0.6",
     "react-test-renderer": "16.6.1",
     "regenerator-runtime": "^0.12.1",
