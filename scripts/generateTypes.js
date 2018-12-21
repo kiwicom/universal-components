@@ -12,7 +12,7 @@ const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const rimraf = require('rimraf');
 
-if (fs.existsSync('../src/Icon/icons.json')) {
+if (fs.existsSync(path.join(__dirname, '../src/Icon/icons.json'))) {
   const icons = require('../src/Icon/icons.json'); // eslint-disable-line global-require
 
   rimraf.sync(path.join(__dirname, '../src/types/_generated-types'));
