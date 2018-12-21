@@ -21,12 +21,12 @@ if (fs.existsSync(path.join(__dirname, '../src/Icon/icons.json'))) {
   fs.writeFileSync(
     path.join(__dirname, '..', 'src/types/_generated-types', 'index.js'),
     `// @flow strict
-    
-    export type IconNameType =
-    | ${Object.keys(icons)
-      .map(n => `'${n}'`)
-      .join('\n  | ')};
-      `
+
+export type IconNameType =
+  | ${Object.keys(icons)
+    .map(n => `'${n}'`)
+    .join('\n  | ')};
+`
   );
 
   console.log('Successfully generated _generated-types/index.js');
