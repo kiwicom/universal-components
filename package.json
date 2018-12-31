@@ -61,6 +61,7 @@
     "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react-native": "^3.5.0",
+    "fast-check": "^1.9.1",
     "file-loader": "^3.0.1",
     "flow-bin": "0.78.0",
     "jest": "^23.6.0",
