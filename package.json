@@ -79,7 +79,7 @@
     "react-native": "^0.57.5",
     "react-native-storybook-loader": "^1.8.0",
     "react-native-testing-library": "^1.5.0",
-    "react-native-web": "^0.9.9",
+    "react-native-web": "^0.10.0",
     "react-native-web-image-loader": "^0.0.6",
     "react-test-renderer": "16.7.0",
     "regenerator-runtime": "^0.12.1",
