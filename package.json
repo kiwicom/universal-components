@@ -83,7 +83,7 @@
     "react-native-web-image-loader": "^0.0.6",
     "react-test-renderer": "16.7.0",
     "regenerator-runtime": "^0.12.1",
-    "release-it": "^8.4.2",
+    "release-it": "^10.0.7",
     "rimraf": "^2.6.3",
     "snapshot-diff": "^0.4.0",
     "webpack": "^4.29.1"
