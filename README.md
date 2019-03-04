@@ -1,3 +1,11 @@
+# ⚠️ Archived ⚠️
+
+## This repository has moved to https://github.com/kiwicom/margarita/tree/master/packages/universal-components
+
+---
+
+
+
 # Universal Components
 
 Component library compatible with Expo/React Native projects as well as React applications.
